@@ -66,11 +66,27 @@ Checks that a value is a syntactically valid UUID version 7 string.
 
 ## Tests
 
-`npm run test` builds the package, runs Node unit and integration tests with coverage, and runs runtime compatibility suites for Node, Bun, Deno, Cloudflare Workers, Edge Runtime, and browsers.
+- Latest local `npm run test` run passed on Node `v22.14.0`.
+- Node unit suite: `3/3` passed.
+- Node integration suite: `2/2` passed.
+- Coverage: `100%` statements, branches, functions, and lines.
+- Runtime E2E: Node ESM `7/7` passed.
+- Runtime E2E: Node CJS `7/7` passed.
+- Runtime E2E: Bun ESM `7/7` passed.
+- Runtime E2E: Bun CJS `7/7` passed.
+- Runtime E2E: Deno ESM `7/7` passed.
+- Runtime E2E: Cloudflare Workers ESM `7/7` passed.
+- Runtime E2E: Edge Runtime ESM `7/7` passed.
+- Browser E2E: `5/5` Playwright projects passed (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`).
 
 ## Benchmarks
 
-`npm run bench` runs a small local benchmark harness for the current exports. Results vary by machine.
+- Latest local `npm run bench` run: Node `v22.14.0` on `win32 x64`.
+- `prototype(record)`: `14,594,705 ops/sec` (`137.0 ms`).
+- `prototype(url)`: `4,703,229 ops/sec` (`425.2 ms`).
+- `isUuidV7(valid)`: `3,099,683 ops/sec` (`322.6 ms`).
+- `isUuidV7(invalid)`: `2,609,510 ops/sec` (`383.2 ms`).
+- Results vary by machine.
 
 ## License
 

@@ -2,7 +2,7 @@
   "type": "module",
   "license": "Apache-2.0",
   "name": "@sovereignbase/utils",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Shared TypeScript utilities for removing repeated code across Sovereignbase codebases.",
   "keywords": [
     "typescript",
