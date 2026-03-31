@@ -1,53 +1,4 @@
-/**
- * Represents the normalized runtime tag returned by {@link prototype}.
- */
-export type Prototype =
-  | 'null'
-  | 'undefined'
-  | 'boolean'
-  | 'string'
-  | 'symbol'
-  | 'number'
-  | 'bigint'
-  | 'function'
-  | 'record'
-  | 'array'
-  | 'map'
-  | 'set'
-  | 'weakmap'
-  | 'weakset'
-  | 'date'
-  | 'regexp'
-  | 'error'
-  | 'promise'
-  | 'arraybuffer'
-  | 'sharedarraybuffer'
-  | 'dataview'
-  | 'int8array'
-  | 'uint8array'
-  | 'uint8clampedarray'
-  | 'int16array'
-  | 'uint16array'
-  | 'int32array'
-  | 'uint32array'
-  | 'float32array'
-  | 'float64array'
-  | 'bigint64array'
-  | 'biguint64array'
-  | 'url'
-  | 'urlsearchparams'
-  | 'headers'
-  | 'request'
-  | 'response'
-  | 'formdata'
-  | 'blob'
-  | 'file'
-  | 'readablestream'
-  | 'writablestream'
-  | 'transformstream'
-  | 'unknown'
-
-const prototypes = new Set<Prototype>([
+const PROTOTYPE_LIST = [
   'null',
   'undefined',
   'boolean',
@@ -92,7 +43,12 @@ const prototypes = new Set<Prototype>([
   'writablestream',
   'transformstream',
   'unknown',
-])
+]
+
+/**
+ * Represents the normalized runtime tag returned by {@link prototype}.
+ */
+export type Prototype = (typeof PROTOTYPE_LIST)[number]
 
 /**
  * Returns a normalized lowercase tag for the runtime category of `value`.
@@ -112,7 +68,7 @@ export function prototype(value: unknown): Prototype {
 
   if (type === 'object') type = 'record'
 
-  if (!prototypes.has(type as Prototype)) {
+  if (!PROTOTYPE_LIST.includes(type as Prototype)) {
     type = 'unknown'
   }
 
