@@ -48,7 +48,7 @@ prototype({ ok: true }) // 'record'
 prototype(new URL('https://sovereignbase.dev')) // 'url'
 ```
 
-Returns a normalized lowercase runtime tag for common primitives, built-ins, and platform objects.
+Returns a normalized lowercase runtime tag for common primitives, serializable built-ins, and selected platform objects.
 
 ### `isUuidV7()`
 
@@ -82,10 +82,10 @@ Checks that a value is a syntactically valid UUID version 7 string.
 ## Benchmarks
 
 - Latest local `npm run bench` run: Node `v22.14.0` on `win32 x64`.
-- `prototype(record)`: `14,594,705 ops/sec` (`137.0 ms`).
-- `prototype(url)`: `4,703,229 ops/sec` (`425.2 ms`).
-- `isUuidV7(valid)`: `3,099,683 ops/sec` (`322.6 ms`).
-- `isUuidV7(invalid)`: `2,609,510 ops/sec` (`383.2 ms`).
+- `prototype(record)`: `12,833,527 ops/sec` (`155.8 ms`).
+- `prototype(url)`: `5,451,708 ops/sec` (`366.9 ms`).
+- `isUuidV7(valid)`: `5,656,844 ops/sec` (`176.8 ms`).
+- `isUuidV7(invalid)`: `6,134,702 ops/sec` (`163.0 ms`).
 - Results vary by machine.
 
 ## License

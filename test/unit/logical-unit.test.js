@@ -13,16 +13,18 @@ test('prototype classifies common primitives and built-ins', () => {
   assert.equal(prototype(7n), 'bigint')
   assert.equal(
     prototype(() => {}),
-    'function'
+    'unknown'
   )
   assert.equal(prototype({ ok: true }), 'record')
   assert.equal(prototype([]), 'array')
   assert.equal(prototype(new Map()), 'map')
   assert.equal(prototype(new Set()), 'set')
+  assert.equal(prototype(new WeakMap()), 'unknown')
+  assert.equal(prototype(new WeakSet()), 'unknown')
   assert.equal(prototype(new Date(0)), 'date')
   assert.equal(prototype(/utils/u), 'regexp')
   assert.equal(prototype(new Error('boom')), 'error')
-  assert.equal(prototype(Promise.resolve()), 'promise')
+  assert.equal(prototype(Promise.resolve()), 'unknown')
   assert.equal(prototype(new ArrayBuffer(8)), 'arraybuffer')
   assert.equal(prototype(new DataView(new ArrayBuffer(8))), 'dataview')
   assert.equal(prototype(new Uint8Array([1, 2, 3])), 'uint8array')
@@ -31,15 +33,15 @@ test('prototype classifies common primitives and built-ins', () => {
 test('prototype handles platform objects and unsupported tags', () => {
   assert.equal(prototype(new URL('https://sovereignbase.dev')), 'url')
   assert.equal(prototype(new URLSearchParams('ok=true')), 'urlsearchparams')
-  assert.equal(prototype(new Headers({ 'x-test': '1' })), 'headers')
-  assert.equal(prototype(new Request('https://sovereignbase.dev')), 'request')
-  assert.equal(prototype(new Response('ok')), 'response')
-  assert.equal(prototype(new FormData()), 'formdata')
+  assert.equal(prototype(new Headers({ 'x-test': '1' })), 'unknown')
+  assert.equal(prototype(new Request('https://sovereignbase.dev')), 'unknown')
+  assert.equal(prototype(new Response('ok')), 'unknown')
+  assert.equal(prototype(new FormData()), 'unknown')
   assert.equal(prototype(new Blob(['ok'])), 'blob')
   assert.equal(prototype(new File(['ok'], 'ok.txt')), 'file')
-  assert.equal(prototype(new ReadableStream()), 'readablestream')
-  assert.equal(prototype(new WritableStream()), 'writablestream')
-  assert.equal(prototype(new TransformStream()), 'transformstream')
+  assert.equal(prototype(new ReadableStream()), 'unknown')
+  assert.equal(prototype(new WritableStream()), 'unknown')
+  assert.equal(prototype(new TransformStream()), 'unknown')
 
   const tagged = { [Symbol.toStringTag]: 'ExampleValue' }
 

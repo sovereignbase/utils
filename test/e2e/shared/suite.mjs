@@ -9,17 +9,13 @@ const KNOWN_PROTOTYPES = new Set([
   'symbol',
   'number',
   'bigint',
-  'function',
   'record',
   'array',
   'map',
   'set',
-  'weakmap',
-  'weakset',
   'date',
   'regexp',
   'error',
-  'promise',
   'arraybuffer',
   'sharedarraybuffer',
   'dataview',
@@ -36,15 +32,8 @@ const KNOWN_PROTOTYPES = new Set([
   'biguint64array',
   'url',
   'urlsearchparams',
-  'headers',
-  'request',
-  'response',
-  'formdata',
   'blob',
   'file',
-  'readablestream',
-  'writablestream',
-  'transformstream',
   'unknown',
 ])
 
@@ -115,7 +104,7 @@ export async function runUtilsSuite(api, options = {}) {
     assertEqual(prototype(7n), 'bigint')
     assertEqual(
       prototype(() => {}),
-      'function'
+      'unknown'
     )
   })
 
@@ -125,10 +114,12 @@ export async function runUtilsSuite(api, options = {}) {
     assertEqual(prototype([]), 'array')
     assertEqual(prototype(new Map()), 'map')
     assertEqual(prototype(new Set()), 'set')
+    assertEqual(prototype(new WeakMap()), 'unknown')
+    assertEqual(prototype(new WeakSet()), 'unknown')
     assertEqual(prototype(new Date(0)), 'date')
     assertEqual(prototype(/utils/u), 'regexp')
     assertEqual(prototype(new Error('boom')), 'error')
-    assertEqual(prototype(Promise.resolve()), 'promise')
+    assertEqual(prototype(Promise.resolve()), 'unknown')
     assertEqual(prototype(new ArrayBuffer(8)), 'arraybuffer')
     assertEqual(prototype(new DataView(new ArrayBuffer(8))), 'dataview')
     assertEqual(prototype(new Uint8Array([1, 2, 3])), 'uint8array')
