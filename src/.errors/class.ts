@@ -1,12 +1,12 @@
-export type PackageNameErrorCode = 'EXAMPLE_ERROR_CODE'
+export type UtilsErrorCode = 'EXAMPLE_ERROR_CODE'
 
-export class PackageNameError extends Error {
-  readonly code: PackageNameErrorCode
+export class UtilsError extends Error {
+  readonly code: UtilsErrorCode
 
-  constructor(code: PackageNameErrorCode, message?: string) {
+  constructor(code: UtilsErrorCode, message?: string) {
     const detail = message ?? code
-    super(`{@z-base/package-name} ${detail}`)
+    super(`{@sovereignbase/utils} ${detail}`)
     this.code = code
-    this.name = 'PackageNameError'
+    this.name = 'UtilsError'
   }
 }
