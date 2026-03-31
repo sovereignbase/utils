@@ -103,7 +103,7 @@ const prototypes = new Set<Prototype>([
  * @param value The value to classify.
  * @returns A normalized runtime tag such as `"string"`, `"record"`, `"url"`, or `"unknown"`.
  */
-export function prototype(value: any): Prototype {
+export function prototype(value: unknown): Prototype {
   let type: string = typeof value
 
   if (type === 'object') {
