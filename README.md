@@ -11,7 +11,7 @@ Shared TypeScript utilities for removing repeated code across Sovereignbase code
 
 - Runtimes: modern JavaScript runtimes; the repository includes runtime compatibility tests for Node, Bun, Deno, Cloudflare Workers, Edge Runtime, and browsers.
 - Module format: ESM and CommonJS.
-- Required globals / APIs: no special platform APIs are required by the current exports.
+- Required globals / APIs: `structuredClone` is required for successful `safeStructuredClone()` results.
 - TypeScript: bundled types.
 
 ## Goals
@@ -64,28 +64,45 @@ if (isUuidV7(value)) {
 
 Checks that a value is a syntactically valid UUID version 7 string.
 
+### `safeStructuredClone()`
+
+```ts
+import { safeStructuredClone } from '@sovereignbase/utils'
+
+const result = safeStructuredClone({ ok: true, nested: { count: 1 } })
+
+if (result[0]) {
+  const clone = result[1]
+  clone // deep cloned value
+}
+```
+
+Attempts a structured clone and returns a tuple instead of throwing on unsupported values.
+
 ## Tests
 
 - Latest local `npm run test` run passed on Node `v22.14.0`.
-- Node unit suite: `3/3` passed.
+- Node unit suite: `5/5` passed.
 - Node integration suite: `2/2` passed.
 - Coverage: `100%` statements, branches, functions, and lines.
-- Runtime E2E: Node ESM `7/7` passed.
-- Runtime E2E: Node CJS `7/7` passed.
-- Runtime E2E: Bun ESM `7/7` passed.
-- Runtime E2E: Bun CJS `7/7` passed.
-- Runtime E2E: Deno ESM `7/7` passed.
-- Runtime E2E: Cloudflare Workers ESM `7/7` passed.
-- Runtime E2E: Edge Runtime ESM `7/7` passed.
+- Runtime E2E: Node ESM `9/9` passed.
+- Runtime E2E: Node CJS `9/9` passed.
+- Runtime E2E: Bun ESM `9/9` passed.
+- Runtime E2E: Bun CJS `9/9` passed.
+- Runtime E2E: Deno ESM `9/9` passed.
+- Runtime E2E: Cloudflare Workers ESM `9/9` passed.
+- Runtime E2E: Edge Runtime ESM `9/9` passed.
 - Browser E2E: `5/5` Playwright projects passed (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`).
 
 ## Benchmarks
 
 - Latest local `npm run bench` run: Node `v22.14.0` on `win32 x64`.
-- `prototype(record)`: `12,833,527 ops/sec` (`155.8 ms`).
-- `prototype(url)`: `5,451,708 ops/sec` (`366.9 ms`).
-- `isUuidV7(valid)`: `5,656,844 ops/sec` (`176.8 ms`).
-- `isUuidV7(invalid)`: `6,134,702 ops/sec` (`163.0 ms`).
+- `prototype(record)`: `8,060,210 ops/sec` (`248.1 ms`).
+- `prototype(url)`: `3,624,304 ops/sec` (`551.8 ms`).
+- `isUuidV7(valid)`: `3,575,658 ops/sec` (`279.7 ms`).
+- `isUuidV7(invalid)`: `4,184,715 ops/sec` (`239.0 ms`).
+- `safeStructuredClone(record)`: `110,503 ops/sec` (`2262.4 ms`).
+- `safeStructuredClone(function)`: `28,112 ops/sec` (`8893.1 ms`).
 - Results vary by machine.
 
 ## License

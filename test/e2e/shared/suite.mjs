@@ -42,7 +42,7 @@ export async function runUtilsSuite(api, options = {}) {
   const runtimeGlobals = options.runtimeGlobals ?? globalThis
   const results = { label, ok: true, errors: [], tests: [] }
 
-  const { prototype, isUuidV7 } = api
+  const { prototype, isUuidV7, safeStructuredClone } = api
 
   function assert(condition, message) {
     if (!condition) throw new Error(message || 'assertion failed')
@@ -92,6 +92,10 @@ export async function runUtilsSuite(api, options = {}) {
   await runTest('exports shape', () => {
     assert(typeof prototype === 'function', 'prototype export missing')
     assert(typeof isUuidV7 === 'function', 'isUuidV7 export missing')
+    assert(
+      typeof safeStructuredClone === 'function',
+      'safeStructuredClone export missing'
+    )
   })
 
   await runTest('prototype classifies primitives', () => {
@@ -205,6 +209,53 @@ export async function runUtilsSuite(api, options = {}) {
     assertEqual(isUuidV7(undefined), false)
     assertEqual(isUuidV7(7), false)
   })
+
+  await runTest('safeStructuredClone clones supported values', () => {
+    if (typeof runtimeGlobals.structuredClone !== 'function') {
+      assertEqual(safeStructuredClone({ ok: true })[0], false)
+      return
+    }
+
+    const source = {
+      ok: true,
+      nested: { count: 1 },
+      list: [1, 2, 3],
+      bytes: new Uint8Array([1, 2, 3]),
+    }
+
+    const result = safeStructuredClone(source)
+
+    assertEqual(result[0], true)
+    if (!result[0]) return
+
+    const clone = result[1]
+
+    assert(clone !== source, 'expected a new object')
+    assert(
+      clone.nested !== source.nested,
+      'expected nested object to be cloned'
+    )
+    assert(clone.list !== source.list, 'expected array to be cloned')
+    assert(clone.bytes !== source.bytes, 'expected typed array to be cloned')
+    assertEqual(clone.nested.count, 1)
+    assertEqual(clone.list.length, 3)
+    assertEqual(clone.bytes[0], 1)
+
+    clone.nested.count = 2
+    clone.list.push(4)
+    clone.bytes[0] = 9
+
+    assertEqual(source.nested.count, 1)
+    assertEqual(source.list.length, 3)
+    assertEqual(source.bytes[0], 1)
+  })
+
+  await runTest(
+    'safeStructuredClone returns false for unsupported values',
+    () => {
+      assertEqual(safeStructuredClone(() => {})[0], false)
+    }
+  )
 
   return results
 }

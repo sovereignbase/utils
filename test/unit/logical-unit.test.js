@@ -1,7 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import { isUuidV7, prototype } from '../../dist/index.js'
+import { isUuidV7, prototype, safeStructuredClone } from '../../dist/index.js'
 
 test('prototype classifies common primitives and built-ins', () => {
   assert.equal(prototype(null), 'null')
@@ -55,4 +55,41 @@ test('isUuidV7 accepts only UUID version 7 strings', () => {
   assert.equal(isUuidV7(null), false)
   assert.equal(isUuidV7(undefined), false)
   assert.equal(isUuidV7(7), false)
+})
+
+test('safeStructuredClone returns a deep clone for structured-cloneable values', () => {
+  const source = {
+    ok: true,
+    nested: { count: 1 },
+    list: [1, 2, 3],
+    bytes: new Uint8Array([1, 2, 3]),
+  }
+
+  const result = safeStructuredClone(source)
+
+  assert.equal(result[0], true)
+  if (!result[0]) return
+
+  const clone = result[1]
+
+  assert.notEqual(clone, source)
+  assert.notEqual(clone.nested, source.nested)
+  assert.notEqual(clone.list, source.list)
+  assert.notEqual(clone.bytes, source.bytes)
+  assert.deepEqual(clone, source)
+
+  clone.nested.count = 2
+  clone.list.push(4)
+  clone.bytes[0] = 9
+
+  assert.equal(source.nested.count, 1)
+  assert.deepEqual(source.list, [1, 2, 3])
+  assert.deepEqual(Array.from(source.bytes), [1, 2, 3])
+})
+
+test('safeStructuredClone returns false for uncloneable values', () => {
+  assert.deepEqual(
+    safeStructuredClone(() => {}),
+    [false]
+  )
 })
