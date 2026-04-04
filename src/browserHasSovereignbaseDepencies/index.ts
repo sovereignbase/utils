@@ -3,13 +3,19 @@ export async function browserHasSovereignbaseDepencies(): Promise<boolean> {
     typeof window !== 'undefined' &&
     window.isSecureContext &&
     typeof navigator !== 'undefined' &&
-    navigator.credentials &&
+    typeof navigator.credentials !== 'undefined' &&
     'showDirectoryPicker' in window &&
-    'PublicKeyCredential' in window &&
-    (await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()) &&
+    'indexedDB' in window &&
+    'BroadcastChannel' in window &&
+    'WebSocket' in window &&
+    'EventTarget' in window &&
+    'CustomEvent' in window &&
     typeof crypto !== 'undefined' &&
-    crypto.subtle &&
+    !!crypto.subtle &&
     typeof crypto.getRandomValues === 'function' &&
-    'indexedDB' in window
+    'PublicKeyCredential' in window &&
+    typeof PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable ===
+      'function' &&
+    (await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable())
   )
 }
