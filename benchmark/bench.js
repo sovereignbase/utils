@@ -1,6 +1,11 @@
 import { performance } from 'node:perf_hooks'
 
-import { isUuidV7, prototype, safeStructuredClone } from '../dist/index.js'
+import {
+  getISO31661Alpha2CountryCodeSet,
+  isUuidV7,
+  prototype,
+  safeStructuredClone,
+} from '../dist/index.js'
 
 const validUuidV7 = '018f0d1e-6c82-7d4b-91c1-8a7b5e2f4a10'
 const invalidUuid = '550e8400-e29b-41d4-a716-446655440000'
@@ -33,6 +38,9 @@ const results = [
   benchmark('prototype(url)', 2_000_000, () => prototype(urlValue)),
   benchmark('isUuidV7(valid)', 1_000_000, () => isUuidV7(validUuidV7)),
   benchmark('isUuidV7(invalid)', 1_000_000, () => isUuidV7(invalidUuid)),
+  benchmark('getISO31661Alpha2CountryCodeSet()', 50_000, () =>
+    getISO31661Alpha2CountryCodeSet()
+  ),
   benchmark('safeStructuredClone(record)', 250_000, () =>
     safeStructuredClone(cloneValue)
   ),

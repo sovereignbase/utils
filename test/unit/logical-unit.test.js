@@ -1,7 +1,110 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
 
-import { isUuidV7, prototype, safeStructuredClone } from '../../dist/index.js'
+import {
+  browserHasSovereignbaseDependencies,
+  getISO31661Alpha2CountryCodeSet,
+  isUuidV7,
+  prototype,
+  safeStructuredClone,
+} from '../../dist/index.js'
+
+const BROWSER_GLOBAL_NAMES = [
+  'window',
+  'navigator',
+  'crypto',
+  'PublicKeyCredential',
+]
+
+function createBrowserEnvironment(overrides = {}) {
+  const PublicKeyCredentialValue =
+    overrides.PublicKeyCredential ??
+    class PublicKeyCredential {
+      static async isUserVerifyingPlatformAuthenticatorAvailable() {
+        return true
+      }
+    }
+
+  const windowValue = {
+    isSecureContext: true,
+    indexedDB: {},
+    BroadcastChannel: class BroadcastChannel {},
+    WebSocket: class WebSocket {},
+    AbortSignal: class AbortSignal {},
+    EventTarget: class EventTarget {},
+    CustomEvent: class CustomEvent {},
+    MessageEvent: class MessageEvent {},
+    DOMException: class DOMException extends Error {},
+    Worker: class Worker {},
+    PushManager: class PushManager {},
+    Notification: class Notification {},
+    PublicKeyCredential: PublicKeyCredentialValue,
+    ...(overrides.window ?? {}),
+  }
+
+  const navigatorValue = {
+    credentials: {},
+    locks: {},
+    onLine: true,
+    serviceWorker: {},
+    ...(overrides.navigator ?? {}),
+  }
+
+  const cryptoValue = {
+    subtle: {},
+    randomUUID() {
+      return '018f0d1e-6c82-7d4b-91c1-8a7b5e2f4a10'
+    },
+    getRandomValues(value) {
+      return value
+    },
+    ...(overrides.crypto ?? {}),
+  }
+
+  return {
+    window: windowValue,
+    navigator: navigatorValue,
+    crypto: cryptoValue,
+    PublicKeyCredential: PublicKeyCredentialValue,
+  }
+}
+
+function without(object, property) {
+  const copy = { ...object }
+  delete copy[property]
+  return copy
+}
+
+async function withMockedBrowserGlobals(mockedGlobals, fn) {
+  const originalDescriptors = new Map(
+    BROWSER_GLOBAL_NAMES.map((name) => [
+      name,
+      Object.getOwnPropertyDescriptor(globalThis, name),
+    ])
+  )
+
+  try {
+    for (const [name, value] of Object.entries(mockedGlobals)) {
+      Object.defineProperty(globalThis, name, {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value,
+      })
+    }
+
+    return await fn()
+  } finally {
+    for (const [name, descriptor] of originalDescriptors) {
+      if (descriptor) {
+        Object.defineProperty(globalThis, name, descriptor)
+        continue
+      }
+
+      Reflect.deleteProperty(globalThis, name)
+    }
+  }
+}
 
 test('prototype classifies common primitives and built-ins', () => {
   assert.equal(prototype(null), 'null')
@@ -92,4 +195,93 @@ test('safeStructuredClone returns false for uncloneable values', () => {
     safeStructuredClone(() => {}),
     [false]
   )
+})
+
+test('getISO31661Alpha2CountryCodeSet returns a fresh set of country codes', () => {
+  const first = getISO31661Alpha2CountryCodeSet()
+  const second = getISO31661Alpha2CountryCodeSet()
+
+  assert.equal(first instanceof Set, true)
+  assert.equal(first.size, 249)
+  assert.equal(first.has('FI'), true)
+  assert.equal(first.has('US'), true)
+  assert.equal(first.has('XX'), false)
+  assert.notEqual(first, second)
+  assert.deepEqual([...first], [...second])
+})
+
+test('browserHasSovereignbaseDependencies returns false outside browser runtimes', async () => {
+  assert.equal(await browserHasSovereignbaseDependencies(), false)
+})
+
+test('browserHasSovereignbaseDependencies returns true when all required browser APIs exist', async () => {
+  const mockedGlobals = createBrowserEnvironment()
+
+  assert.equal(
+    await withMockedBrowserGlobals(mockedGlobals, () =>
+      browserHasSovereignbaseDependencies()
+    ),
+    true
+  )
+})
+
+test('browserHasSovereignbaseDependencies returns false when a required browser dependency is missing', async () => {
+  const base = createBrowserEnvironment()
+  const failureCases = [
+    ['window missing', { ...base, window: undefined }],
+    ['secure context missing', { ...base, window: { ...base.window, isSecureContext: false } }],
+    ['navigator missing', { ...base, navigator: undefined }],
+    ['navigator.credentials missing', { ...base, navigator: without(base.navigator, 'credentials') }],
+    ['indexedDB missing', { ...base, window: without(base.window, 'indexedDB') }],
+    ['BroadcastChannel missing', { ...base, window: without(base.window, 'BroadcastChannel') }],
+    ['WebSocket missing', { ...base, window: without(base.window, 'WebSocket') }],
+    ['AbortSignal missing', { ...base, window: without(base.window, 'AbortSignal') }],
+    ['EventTarget missing', { ...base, window: without(base.window, 'EventTarget') }],
+    ['CustomEvent missing', { ...base, window: without(base.window, 'CustomEvent') }],
+    ['MessageEvent missing', { ...base, window: without(base.window, 'MessageEvent') }],
+    ['DOMException missing', { ...base, window: without(base.window, 'DOMException') }],
+    ['navigator.locks missing', { ...base, navigator: without(base.navigator, 'locks') }],
+    ['navigator.onLine missing', { ...base, navigator: without(base.navigator, 'onLine') }],
+    ['Worker missing', { ...base, window: without(base.window, 'Worker') }],
+    ['navigator.serviceWorker missing', { ...base, navigator: without(base.navigator, 'serviceWorker') }],
+    ['PushManager missing', { ...base, window: without(base.window, 'PushManager') }],
+    ['Notification missing', { ...base, window: without(base.window, 'Notification') }],
+    ['crypto missing', { ...base, crypto: undefined }],
+    ['crypto.subtle missing', { ...base, crypto: { ...base.crypto, subtle: undefined } }],
+    ['crypto.randomUUID missing', { ...base, crypto: { ...base.crypto, randomUUID: undefined } }],
+    ['crypto.getRandomValues missing', { ...base, crypto: { ...base.crypto, getRandomValues: undefined } }],
+    ['PublicKeyCredential missing', { ...base, window: without(base.window, 'PublicKeyCredential') }],
+    [
+      'platform authenticator API missing',
+      {
+        ...base,
+        ...createBrowserEnvironment({
+          PublicKeyCredential: class PublicKeyCredential {},
+        }),
+      },
+    ],
+    [
+      'platform authenticator unavailable',
+      {
+        ...base,
+        ...createBrowserEnvironment({
+          PublicKeyCredential: class PublicKeyCredential {
+            static async isUserVerifyingPlatformAuthenticatorAvailable() {
+              return false
+            }
+          },
+        }),
+      },
+    ],
+  ]
+
+  for (const [name, mockedGlobals] of failureCases) {
+    assert.equal(
+      await withMockedBrowserGlobals(mockedGlobals, () =>
+        browserHasSovereignbaseDependencies()
+      ),
+      false,
+      name
+    )
+  }
 })

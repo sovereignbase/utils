@@ -1,3 +1,6 @@
+/**
+ * Represents an ISO 3166-1 alpha-2 country code.
+ */
 export type ISO31661Alpha2 =
   | "AF"
   | "AX"
@@ -249,6 +252,11 @@ export type ISO31661Alpha2 =
   | "ZM"
   | "ZW";
 
+/**
+ * Returns a new set containing every supported ISO 3166-1 alpha-2 country code.
+ *
+ * @returns A fresh `Set` of uppercase two-character country codes.
+ */
 export function getISO31661Alpha2CountryCodeSet(): Set<ISO31661Alpha2> {
   return new Set([
     "AF",

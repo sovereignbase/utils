@@ -1,4 +1,15 @@
-export async function browserHasSovereignbaseDepencies(): Promise<boolean> {
+/**
+ * Checks whether the current browser environment exposes the APIs required by
+ * Sovereignbase browser features.
+ *
+ * The check requires a secure browser context plus storage, worker,
+ * notifications, Web Crypto, and WebAuthn platform authenticator support. It
+ * resolves to `false` in non-browser runtimes and unsupported browsers.
+ *
+ * @returns A promise that resolves to `true` when the required browser
+ * dependencies are available; otherwise, `false`.
+ */
+export async function browserHasSovereignbaseDependencies(): Promise<boolean> {
   return (
     typeof window !== 'undefined' &&
     window.isSecureContext &&

@@ -5,4 +5,4 @@ export {
   type ISO31661Alpha2,
   getISO31661Alpha2CountryCodeSet,
 } from './ISO31661Alpha2/index.js'
-export { browserHasSovereignbaseDepencies } from './browserHasSovereignbaseDepencies/index.js'
+export { browserHasSovereignbaseDependencies } from './browserHasSovereignbaseDependencies/index.js'

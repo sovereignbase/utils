@@ -9,18 +9,22 @@ const cjsApi = require('../../dist/index.cjs')
 
 test('esm and cjs entrypoints expose the same runtime API', () => {
   assert.deepEqual(Object.keys(esmApi).sort(), [
+    'browserHasSovereignbaseDependencies',
+    'getISO31661Alpha2CountryCodeSet',
     'isUuidV7',
     'prototype',
     'safeStructuredClone',
   ])
   assert.deepEqual(Object.keys(cjsApi).sort(), [
+    'browserHasSovereignbaseDependencies',
+    'getISO31661Alpha2CountryCodeSet',
     'isUuidV7',
     'prototype',
     'safeStructuredClone',
   ])
 })
 
-test('esm and cjs entrypoints behave the same', () => {
+test('esm and cjs entrypoints behave the same', async () => {
   const values = [
     null,
     { ok: true },
@@ -59,5 +63,18 @@ test('esm and cjs entrypoints behave the same', () => {
   assert.deepEqual(
     cjsApi.safeStructuredClone(() => {}),
     [false]
+  )
+
+  const esmCountryCodes = esmApi.getISO31661Alpha2CountryCodeSet()
+  const cjsCountryCodes = cjsApi.getISO31661Alpha2CountryCodeSet()
+
+  assert.equal(esmCountryCodes.size, cjsCountryCodes.size)
+  assert.equal(esmCountryCodes.has('FI'), cjsCountryCodes.has('FI'))
+  assert.equal(esmCountryCodes.has('US'), cjsCountryCodes.has('US'))
+  assert.equal(esmCountryCodes.has('XX'), cjsCountryCodes.has('XX'))
+
+  assert.equal(
+    await esmApi.browserHasSovereignbaseDependencies(),
+    await cjsApi.browserHasSovereignbaseDependencies()
   )
 })

@@ -42,7 +42,13 @@ export async function runUtilsSuite(api, options = {}) {
   const runtimeGlobals = options.runtimeGlobals ?? globalThis
   const results = { label, ok: true, errors: [], tests: [] }
 
-  const { prototype, isUuidV7, safeStructuredClone } = api
+  const {
+    browserHasSovereignbaseDependencies,
+    getISO31661Alpha2CountryCodeSet,
+    prototype,
+    isUuidV7,
+    safeStructuredClone,
+  } = api
 
   function assert(condition, message) {
     if (!condition) throw new Error(message || 'assertion failed')
@@ -90,6 +96,14 @@ export async function runUtilsSuite(api, options = {}) {
   }
 
   await runTest('exports shape', () => {
+    assert(
+      typeof browserHasSovereignbaseDependencies === 'function',
+      'browserHasSovereignbaseDependencies export missing'
+    )
+    assert(
+      typeof getISO31661Alpha2CountryCodeSet === 'function',
+      'getISO31661Alpha2CountryCodeSet export missing'
+    )
     assert(typeof prototype === 'function', 'prototype export missing')
     assert(typeof isUuidV7 === 'function', 'isUuidV7 export missing')
     assert(
@@ -254,6 +268,35 @@ export async function runUtilsSuite(api, options = {}) {
     'safeStructuredClone returns false for unsupported values',
     () => {
       assertEqual(safeStructuredClone(() => {})[0], false)
+    }
+  )
+
+  await runTest(
+    'getISO31661Alpha2CountryCodeSet returns a fresh set of country codes',
+    () => {
+      const first = getISO31661Alpha2CountryCodeSet()
+      const second = getISO31661Alpha2CountryCodeSet()
+
+      assertEqual(Object.prototype.toString.call(first), '[object Set]')
+      assertEqual(first.size, 249)
+      assertEqual(first.has('FI'), true)
+      assertEqual(first.has('US'), true)
+      assertEqual(first.has('XX'), false)
+      assert(first !== second, 'expected a fresh Set per call')
+      assertEqual([...first].join(','), [...second].join(','))
+    }
+  )
+
+  await runTest(
+    'browserHasSovereignbaseDependencies reports runtime support',
+    async () => {
+      const supported = await browserHasSovereignbaseDependencies()
+
+      assertEqual(typeof supported, 'boolean')
+
+      if (typeof runtimeGlobals.window === 'undefined') {
+        assertEqual(supported, false)
+      }
     }
   )
 

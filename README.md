@@ -12,6 +12,7 @@ Shared TypeScript utilities for removing repeated code across Sovereignbase code
 - Runtimes: modern JavaScript runtimes; the repository includes runtime compatibility tests for Node, Bun, Deno, Cloudflare Workers, Edge Runtime, and browsers.
 - Module format: ESM and CommonJS.
 - Required globals / APIs: `structuredClone` is required for successful `safeStructuredClone()` results.
+- Browser capability checks: `browserHasSovereignbaseDependencies()` resolves to `false` outside secure browser contexts and when required browser APIs are missing.
 - TypeScript: bundled types.
 
 ## Goals
@@ -77,6 +78,8 @@ if (result[0]) {
 }
 ```
 
+Attempts a structured clone and returns a tuple instead of throwing on unsupported values.
+
 ### `getISO31661Alpha2CountryCodeSet()`
 
 ```ts
@@ -93,32 +96,45 @@ function epicFunction1(countryCode: ISO31661Alpha2) {
 }
 ```
 
-Attempts a structured clone and returns a tuple instead of throwing on unsupported values.
+Returns a fresh `Set` containing all supported ISO 3166-1 alpha-2 country codes.
+
+### `browserHasSovereignbaseDependencies()`
+
+```ts
+import { browserHasSovereignbaseDependencies } from '@sovereignbase/utils'
+
+if (await browserHasSovereignbaseDependencies()) {
+  console.log('browser runtime supports Sovereignbase dependencies')
+}
+```
+
+Checks whether the current browser environment exposes the secure-context, storage, worker, notification, Web Crypto, and WebAuthn APIs required by Sovereignbase browser features.
 
 ## Tests
 
 - Latest local `npm run test` run passed on Node `v22.14.0`.
-- Node unit suite: `5/5` passed.
+- Node unit suite: `9/9` passed.
 - Node integration suite: `2/2` passed.
 - Coverage: `100%` statements, branches, functions, and lines.
-- Runtime E2E: Node ESM `9/9` passed.
-- Runtime E2E: Node CJS `9/9` passed.
-- Runtime E2E: Bun ESM `9/9` passed.
-- Runtime E2E: Bun CJS `9/9` passed.
-- Runtime E2E: Deno ESM `9/9` passed.
-- Runtime E2E: Cloudflare Workers ESM `9/9` passed.
-- Runtime E2E: Edge Runtime ESM `9/9` passed.
+- Runtime E2E: Node ESM `11/11` passed.
+- Runtime E2E: Node CJS `11/11` passed.
+- Runtime E2E: Bun ESM `11/11` passed.
+- Runtime E2E: Bun CJS `11/11` passed.
+- Runtime E2E: Deno ESM `11/11` passed.
+- Runtime E2E: Cloudflare Workers ESM `11/11` passed.
+- Runtime E2E: Edge Runtime ESM `11/11` passed.
 - Browser E2E: `5/5` Playwright projects passed (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`).
 
 ## Benchmarks
 
 - Latest local `npm run bench` run: Node `v22.14.0` on `win32 x64`.
-- `prototype(record)`: `8,060,210 ops/sec` (`248.1 ms`).
-- `prototype(url)`: `3,624,304 ops/sec` (`551.8 ms`).
-- `isUuidV7(valid)`: `3,575,658 ops/sec` (`279.7 ms`).
-- `isUuidV7(invalid)`: `4,184,715 ops/sec` (`239.0 ms`).
-- `safeStructuredClone(record)`: `110,503 ops/sec` (`2262.4 ms`).
-- `safeStructuredClone(function)`: `28,112 ops/sec` (`8893.1 ms`).
+- `prototype(record)`: `4,882,423 ops/sec` (`409.6 ms`).
+- `prototype(url)`: `2,626,656 ops/sec` (`761.4 ms`).
+- `isUuidV7(valid)`: `2,366,821 ops/sec` (`422.5 ms`).
+- `isUuidV7(invalid)`: `2,970,958 ops/sec` (`336.6 ms`).
+- `getISO31661Alpha2CountryCodeSet()`: `35,059 ops/sec` (`1426.2 ms`).
+- `safeStructuredClone(record)`: `57,335 ops/sec` (`4360.4 ms`).
+- `safeStructuredClone(function)`: `12,678 ops/sec` (`19718.8 ms`).
 - Results vary by machine.
 
 ## License
