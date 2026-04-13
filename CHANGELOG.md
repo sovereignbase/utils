@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/sovereignbase/utils/compare/v1.1.0...v1.2.0) (2026-04-13)
+
+
+### Features
+
+* couple new methods ([0834448](https://github.com/sovereignbase/utils/commit/08344487b2d1d185e6af718790ea1012598a4b15))
+
 ## [1.1.0](https://github.com/sovereignbase/utils/compare/v1.0.0...v1.1.0) (2026-04-01)
 
 
