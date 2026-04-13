@@ -77,6 +77,22 @@ if (result[0]) {
 }
 ```
 
+### `getISO31661Alpha2CountryCodeSet()`
+
+```ts
+import {
+  type ISO31661Alpha2,
+  getISO31661Alpha2CountryCodeSet,
+} from '@sovereignbase/country-codes'
+
+function epicFunction1(countryCode: ISO31661Alpha2) {
+  const countryCodes = getISO31661Alpha2CountryCodeSet()
+  const isCountryCode = countryCodes.has(countryCode)
+  if (!isCountryCode) throw new Error('THAT IS NOT A COUNTRY CODE DUDE!')
+  console.log('EPIC COUNTRY CODE MOMENT:', countryCode)
+}
+```
+
 Attempts a structured clone and returns a tuple instead of throwing on unsupported values.
 
 ## Tests
