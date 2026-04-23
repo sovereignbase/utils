@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/sovereignbase/utils/compare/v1.2.0...v1.2.1) (2026-04-23)
+
+
+### Bug Fixes
+
+* bumbed dependencies. ([6999807](https://github.com/sovereignbase/utils/commit/69998076c5527b98a048f18626184040177f979d))
+
 ## [1.2.0](https://github.com/sovereignbase/utils/compare/v1.1.0...v1.2.0) (2026-04-13)
 
 
