@@ -53,17 +53,17 @@
   "devDependencies": {
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
-    "@playwright/test": "^1.58.2",
-    "@types/node": "^25.5.0",
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0",
     "c8": "^11.0.0",
     "edge-runtime": "^4.0.1",
     "fast-glob": "^3.3.3",
     "husky": "^9.1.7",
-    "playwright": "^1.58.2",
-    "prettier": "^3.8.1",
+    "playwright": "^1.59.1",
+    "prettier": "^3.8.3",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
-    "wrangler": "^4.79.0"
+    "wrangler": "^4.84.1"
   },
   "repository": {
     "type": "git",
@@ -74,6 +74,6 @@
   },
   "homepage": "https://github.com/sovereignbase/utils#readme",
   "dependencies": {
-    "uuid": "^13.0.0"
+    "uuid": "^14.0.0"
   }
 }
