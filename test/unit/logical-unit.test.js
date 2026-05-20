@@ -2,6 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 
 import {
+  afterIdleFor,
   browserHasSovereignbaseDependencies,
   getISO31661Alpha2CountryCodeSet,
   isUuidV7,
@@ -104,6 +105,10 @@ async function withMockedBrowserGlobals(mockedGlobals, fn) {
       Reflect.deleteProperty(globalThis, name)
     }
   }
+}
+
+function waitFor(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds))
 }
 
 test('prototype classifies common primitives and built-ins', () => {
@@ -210,6 +215,38 @@ test('getISO31661Alpha2CountryCodeSet returns a fresh set of country codes', () 
   assert.deepEqual([...first], [...second])
 })
 
+test('afterIdleFor runs the callback after the idle timeout', async () => {
+  let calls = 0
+  const afterIdle = afterIdleFor(10, () => {
+    calls += 1
+  })
+
+  afterIdle()
+
+  assert.equal(calls, 0)
+  await waitFor(20)
+  assert.equal(calls, 1)
+})
+
+test('afterIdleFor restarts the timer on every call', async () => {
+  let calls = 0
+  const afterIdle = afterIdleFor(20, () => {
+    calls += 1
+  })
+
+  afterIdle()
+  await waitFor(10)
+  afterIdle()
+  await waitFor(10)
+  afterIdle()
+  await waitFor(10)
+
+  assert.equal(calls, 0)
+
+  await waitFor(20)
+  assert.equal(calls, 1)
+})
+
 test('browserHasSovereignbaseDependencies returns false outside browser runtimes', async () => {
   assert.equal(await browserHasSovereignbaseDependencies(), false)
 })
@@ -229,28 +266,85 @@ test('browserHasSovereignbaseDependencies returns false when a required browser 
   const base = createBrowserEnvironment()
   const failureCases = [
     ['window missing', { ...base, window: undefined }],
-    ['secure context missing', { ...base, window: { ...base.window, isSecureContext: false } }],
+    [
+      'secure context missing',
+      { ...base, window: { ...base.window, isSecureContext: false } },
+    ],
     ['navigator missing', { ...base, navigator: undefined }],
-    ['navigator.credentials missing', { ...base, navigator: without(base.navigator, 'credentials') }],
-    ['indexedDB missing', { ...base, window: without(base.window, 'indexedDB') }],
-    ['BroadcastChannel missing', { ...base, window: without(base.window, 'BroadcastChannel') }],
-    ['WebSocket missing', { ...base, window: without(base.window, 'WebSocket') }],
-    ['AbortSignal missing', { ...base, window: without(base.window, 'AbortSignal') }],
-    ['EventTarget missing', { ...base, window: without(base.window, 'EventTarget') }],
-    ['CustomEvent missing', { ...base, window: without(base.window, 'CustomEvent') }],
-    ['MessageEvent missing', { ...base, window: without(base.window, 'MessageEvent') }],
-    ['DOMException missing', { ...base, window: without(base.window, 'DOMException') }],
-    ['navigator.locks missing', { ...base, navigator: without(base.navigator, 'locks') }],
-    ['navigator.onLine missing', { ...base, navigator: without(base.navigator, 'onLine') }],
+    [
+      'navigator.credentials missing',
+      { ...base, navigator: without(base.navigator, 'credentials') },
+    ],
+    [
+      'indexedDB missing',
+      { ...base, window: without(base.window, 'indexedDB') },
+    ],
+    [
+      'BroadcastChannel missing',
+      { ...base, window: without(base.window, 'BroadcastChannel') },
+    ],
+    [
+      'WebSocket missing',
+      { ...base, window: without(base.window, 'WebSocket') },
+    ],
+    [
+      'AbortSignal missing',
+      { ...base, window: without(base.window, 'AbortSignal') },
+    ],
+    [
+      'EventTarget missing',
+      { ...base, window: without(base.window, 'EventTarget') },
+    ],
+    [
+      'CustomEvent missing',
+      { ...base, window: without(base.window, 'CustomEvent') },
+    ],
+    [
+      'MessageEvent missing',
+      { ...base, window: without(base.window, 'MessageEvent') },
+    ],
+    [
+      'DOMException missing',
+      { ...base, window: without(base.window, 'DOMException') },
+    ],
+    [
+      'navigator.locks missing',
+      { ...base, navigator: without(base.navigator, 'locks') },
+    ],
+    [
+      'navigator.onLine missing',
+      { ...base, navigator: without(base.navigator, 'onLine') },
+    ],
     ['Worker missing', { ...base, window: without(base.window, 'Worker') }],
-    ['navigator.serviceWorker missing', { ...base, navigator: without(base.navigator, 'serviceWorker') }],
-    ['PushManager missing', { ...base, window: without(base.window, 'PushManager') }],
-    ['Notification missing', { ...base, window: without(base.window, 'Notification') }],
+    [
+      'navigator.serviceWorker missing',
+      { ...base, navigator: without(base.navigator, 'serviceWorker') },
+    ],
+    [
+      'PushManager missing',
+      { ...base, window: without(base.window, 'PushManager') },
+    ],
+    [
+      'Notification missing',
+      { ...base, window: without(base.window, 'Notification') },
+    ],
     ['crypto missing', { ...base, crypto: undefined }],
-    ['crypto.subtle missing', { ...base, crypto: { ...base.crypto, subtle: undefined } }],
-    ['crypto.randomUUID missing', { ...base, crypto: { ...base.crypto, randomUUID: undefined } }],
-    ['crypto.getRandomValues missing', { ...base, crypto: { ...base.crypto, getRandomValues: undefined } }],
-    ['PublicKeyCredential missing', { ...base, window: without(base.window, 'PublicKeyCredential') }],
+    [
+      'crypto.subtle missing',
+      { ...base, crypto: { ...base.crypto, subtle: undefined } },
+    ],
+    [
+      'crypto.randomUUID missing',
+      { ...base, crypto: { ...base.crypto, randomUUID: undefined } },
+    ],
+    [
+      'crypto.getRandomValues missing',
+      { ...base, crypto: { ...base.crypto, getRandomValues: undefined } },
+    ],
+    [
+      'PublicKeyCredential missing',
+      { ...base, window: without(base.window, 'PublicKeyCredential') },
+    ],
     [
       'platform authenticator API missing',
       {

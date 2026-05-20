@@ -43,6 +43,7 @@ export async function runUtilsSuite(api, options = {}) {
   const results = { label, ok: true, errors: [], tests: [] }
 
   const {
+    afterIdleFor,
     browserHasSovereignbaseDependencies,
     getISO31661Alpha2CountryCodeSet,
     prototype,
@@ -100,6 +101,7 @@ export async function runUtilsSuite(api, options = {}) {
       typeof browserHasSovereignbaseDependencies === 'function',
       'browserHasSovereignbaseDependencies export missing'
     )
+    assert(typeof afterIdleFor === 'function', 'afterIdleFor export missing')
     assert(
       typeof getISO31661Alpha2CountryCodeSet === 'function',
       'getISO31661Alpha2CountryCodeSet export missing'
@@ -286,6 +288,20 @@ export async function runUtilsSuite(api, options = {}) {
       assertEqual([...first].join(','), [...second].join(','))
     }
   )
+
+  await runTest('afterIdleFor waits until calls stop', async () => {
+    let calls = 0
+    const afterIdle = afterIdleFor(10, () => {
+      calls += 1
+    })
+
+    afterIdle()
+    afterIdle()
+
+    assertEqual(calls, 0)
+    await new Promise((resolve) => setTimeout(resolve, 20))
+    assertEqual(calls, 1)
+  })
 
   await runTest(
     'browserHasSovereignbaseDependencies reports runtime support',

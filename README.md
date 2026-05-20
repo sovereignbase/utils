@@ -110,31 +110,46 @@ if (await browserHasSovereignbaseDependencies()) {
 
 Checks whether the current browser environment exposes the secure-context, storage, worker, notification, Web Crypto, and WebAuthn APIs required by Sovereignbase browser features.
 
+### `afterIdleFor()`
+
+```ts
+import { afterIdleFor } from '@sovereignbase/utils'
+
+const saveAfterTypingStops = afterIdleFor(500, () => {
+  console.log('save draft')
+})
+
+document.addEventListener('input', saveAfterTypingStops)
+```
+
+Creates a function that resets a timer on every call and runs the callback after the requested idle timeout.
+
 ## Tests
 
 - Latest local `npm run test` run passed on Node `v22.14.0`.
-- Node unit suite: `9/9` passed.
+- Node unit suite: `11/11` passed.
 - Node integration suite: `2/2` passed.
 - Coverage: `100%` statements, branches, functions, and lines.
-- Runtime E2E: Node ESM `11/11` passed.
-- Runtime E2E: Node CJS `11/11` passed.
-- Runtime E2E: Bun ESM `11/11` passed.
-- Runtime E2E: Bun CJS `11/11` passed.
-- Runtime E2E: Deno ESM `11/11` passed.
-- Runtime E2E: Cloudflare Workers ESM `11/11` passed.
-- Runtime E2E: Edge Runtime ESM `11/11` passed.
+- Runtime E2E: Node ESM `12/12` passed.
+- Runtime E2E: Node CJS `12/12` passed.
+- Runtime E2E: Bun ESM `12/12` passed.
+- Runtime E2E: Bun CJS `12/12` passed.
+- Runtime E2E: Deno ESM `12/12` passed.
+- Runtime E2E: Cloudflare Workers ESM `12/12` passed.
+- Runtime E2E: Edge Runtime ESM `12/12` passed.
 - Browser E2E: `5/5` Playwright projects passed (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`).
 
 ## Benchmarks
 
 - Latest local `npm run bench` run: Node `v22.14.0` on `win32 x64`.
-- `prototype(record)`: `4,882,423 ops/sec` (`409.6 ms`).
-- `prototype(url)`: `2,626,656 ops/sec` (`761.4 ms`).
-- `isUuidV7(valid)`: `2,366,821 ops/sec` (`422.5 ms`).
-- `isUuidV7(invalid)`: `2,970,958 ops/sec` (`336.6 ms`).
-- `getISO31661Alpha2CountryCodeSet()`: `35,059 ops/sec` (`1426.2 ms`).
-- `safeStructuredClone(record)`: `57,335 ops/sec` (`4360.4 ms`).
-- `safeStructuredClone(function)`: `12,678 ops/sec` (`19718.8 ms`).
+- `prototype(record)`: `13,677,842 ops/sec` (`146.2 ms`).
+- `prototype(url)`: `6,227,323 ops/sec` (`321.2 ms`).
+- `isUuidV7(valid)`: `6,074,829 ops/sec` (`164.6 ms`).
+- `isUuidV7(invalid)`: `6,717,126 ops/sec` (`148.9 ms`).
+- `getISO31661Alpha2CountryCodeSet()`: `82,029 ops/sec` (`609.5 ms`).
+- `safeStructuredClone(record)`: `197,265 ops/sec` (`1267.3 ms`).
+- `safeStructuredClone(function)`: `49,716 ops/sec` (`5028.6 ms`).
+- `afterIdleFor(callback)`: `3,160,526 ops/sec` (`31.6 ms`).
 - Results vary by machine.
 
 ## License

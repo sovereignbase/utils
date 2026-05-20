@@ -1,6 +1,7 @@
 import { performance } from 'node:perf_hooks'
 
 import {
+  afterIdleFor,
   getISO31661Alpha2CountryCodeSet,
   isUuidV7,
   prototype,
@@ -17,6 +18,7 @@ const cloneValue = {
   list: [1, 2, 3],
   bytes: new Uint8Array([1, 2, 3]),
 }
+const afterIdleCallback = afterIdleFor(1, () => {})
 
 function benchmark(name, iterations, fn) {
   for (let index = 0; index < 10_000; index++) fn()
@@ -47,7 +49,10 @@ const results = [
   benchmark('safeStructuredClone(function)', 250_000, () =>
     safeStructuredClone(() => {})
   ),
+  benchmark('afterIdleFor(callback)', 100_000, () => afterIdleCallback()),
 ]
+
+await new Promise((resolve) => setTimeout(resolve, 1))
 
 console.log(
   `Environment: Node ${process.version} (${process.platform} ${process.arch})`

@@ -7,21 +7,18 @@ import * as esmApi from '../../dist/index.js'
 const require = createRequire(import.meta.url)
 const cjsApi = require('../../dist/index.cjs')
 
+const runtimeExports = [
+  'afterIdleFor',
+  'browserHasSovereignbaseDependencies',
+  'getISO31661Alpha2CountryCodeSet',
+  'isUuidV7',
+  'prototype',
+  'safeStructuredClone',
+]
+
 test('esm and cjs entrypoints expose the same runtime API', () => {
-  assert.deepEqual(Object.keys(esmApi).sort(), [
-    'browserHasSovereignbaseDependencies',
-    'getISO31661Alpha2CountryCodeSet',
-    'isUuidV7',
-    'prototype',
-    'safeStructuredClone',
-  ])
-  assert.deepEqual(Object.keys(cjsApi).sort(), [
-    'browserHasSovereignbaseDependencies',
-    'getISO31661Alpha2CountryCodeSet',
-    'isUuidV7',
-    'prototype',
-    'safeStructuredClone',
-  ])
+  assert.deepEqual(Object.keys(esmApi).sort(), runtimeExports)
+  assert.deepEqual(Object.keys(cjsApi).sort(), runtimeExports)
 })
 
 test('esm and cjs entrypoints behave the same', async () => {
@@ -77,4 +74,7 @@ test('esm and cjs entrypoints behave the same', async () => {
     await esmApi.browserHasSovereignbaseDependencies(),
     await cjsApi.browserHasSovereignbaseDependencies()
   )
+
+  assert.equal(typeof esmApi.afterIdleFor(1, () => {}), 'function')
+  assert.equal(typeof cjsApi.afterIdleFor(1, () => {}), 'function')
 })
