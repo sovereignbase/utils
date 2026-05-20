@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/sovereignbase/utils/compare/v1.3.0...v1.3.1) (2026-05-20)
+
+
+### Bug Fixes
+
+* issue with types and jsr ([daf7d76](https://github.com/sovereignbase/utils/commit/daf7d76a308018b270304286b8d2ffdfdec70f4c))
+
 ## [1.3.0](https://github.com/sovereignbase/utils/compare/v1.2.2...v1.3.0) (2026-05-20)
 
 
