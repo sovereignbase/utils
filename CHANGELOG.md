@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/sovereignbase/utils/compare/v1.2.2...v1.3.0) (2026-05-20)
+
+
+### Features
+
+* add debounce function ([be20893](https://github.com/sovereignbase/utils/commit/be208932111ee803d7a577ebab7791d04db5809b))
+
 ## [1.2.2](https://github.com/sovereignbase/utils/compare/v1.2.1...v1.2.2) (2026-05-09)
 
 
