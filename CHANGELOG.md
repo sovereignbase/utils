@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/sovereignbase/utils/compare/v1.3.1...v1.4.0) (2026-05-24)
+
+
+### Features
+
+* bigInt and uuidV7 related methods ([34a00eb](https://github.com/sovereignbase/utils/commit/34a00eb93d9efa7d4899ab4fcd039bcc7e4a4ced))
+
 ## [1.3.1](https://github.com/sovereignbase/utils/compare/v1.3.0...v1.3.1) (2026-05-20)
 
 
