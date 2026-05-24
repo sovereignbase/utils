@@ -1,13 +1,18 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { runInNewContext } from 'node:vm'
 
 import {
   afterIdleFor,
   browserHasSovereignbaseDependencies,
   getISO31661Alpha2CountryCodeSet,
+  isRecord,
   isUuidV7,
+  isUuidV7BigInt,
+  safeBigIntFromString,
   prototype,
   safeStructuredClone,
+  uuidV7BigIntStringToBigInt,
 } from '../../dist/index.js'
 
 const BROWSER_GLOBAL_NAMES = [
@@ -163,6 +168,57 @@ test('isUuidV7 accepts only UUID version 7 strings', () => {
   assert.equal(isUuidV7(null), false)
   assert.equal(isUuidV7(undefined), false)
   assert.equal(isUuidV7(7), false)
+})
+
+test('isUuidV7BigInt accepts only UUID version 7 bigint values', () => {
+  assert.equal(isUuidV7BigInt(0x018f0d1e6c827d4b91c18a7b5e2f4a10n), true)
+  assert.equal(isUuidV7BigInt(0x550e8400e29b41d4a716446655440000n), false)
+  assert.equal(isUuidV7BigInt(0x018f0d1e6c826d4b91c18a7b5e2f4a10n), false)
+  assert.equal(isUuidV7BigInt(0x018f0d1e6c827d4b71c18a7b5e2f4a10n), false)
+  assert.equal(isUuidV7BigInt(-1n), false)
+  assert.equal(isUuidV7BigInt(0x100000000000000000000000000000000n), false)
+  assert.equal(isUuidV7BigInt('018f0d1e6c827d4b91c18a7b5e2f4a10'), false)
+  assert.equal(isUuidV7BigInt(null), false)
+})
+
+test('isRecord accepts only plain object records', () => {
+  class Example {}
+
+  assert.equal(isRecord({ ok: true }), true)
+  assert.equal(isRecord({}), true)
+  assert.equal(isRecord(runInNewContext('({ ok: true })')), true)
+  assert.equal(isRecord(Object.create(null)), false)
+  assert.equal(isRecord(new Example()), false)
+  assert.equal(isRecord([]), false)
+  assert.equal(isRecord(new Map()), false)
+  assert.equal(isRecord(null), false)
+  assert.equal(isRecord(undefined), false)
+  assert.equal(isRecord('record'), false)
+})
+
+test('safeBigIntFromString returns parsed bigints without throwing', () => {
+  assert.equal(safeBigIntFromString('0'), 0n)
+  assert.equal(safeBigIntFromString('42'), 42n)
+  assert.equal(safeBigIntFromString('-42'), -42n)
+  assert.equal(safeBigIntFromString('9007199254740993'), 9007199254740993n)
+  assert.equal(safeBigIntFromString('0x10'), 16n)
+  assert.equal(safeBigIntFromString('1.5'), false)
+  assert.equal(safeBigIntFromString('1n'), false)
+  assert.equal(safeBigIntFromString('not-a-bigint'), false)
+})
+
+test('uuidV7BigIntStringToBigInt returns only valid UUID v7 bigints', () => {
+  const valid = 0x018f0d1e6c827d4b91c18a7b5e2f4a10n
+  const invalidVersion = 0x018f0d1e6c826d4b91c18a7b5e2f4a10n
+  const invalidVariant = 0x018f0d1e6c827d4b71c18a7b5e2f4a10n
+
+  assert.equal(uuidV7BigIntStringToBigInt(valid.toString()), valid)
+  assert.equal(uuidV7BigIntStringToBigInt(`0x${valid.toString(16)}`), valid)
+  assert.equal(uuidV7BigIntStringToBigInt(invalidVersion.toString()), false)
+  assert.equal(uuidV7BigIntStringToBigInt(invalidVariant.toString()), false)
+  assert.equal(uuidV7BigIntStringToBigInt('not-a-bigint'), false)
+  assert.equal(uuidV7BigIntStringToBigInt(valid), false)
+  assert.equal(uuidV7BigIntStringToBigInt(null), false)
 })
 
 test('safeStructuredClone returns a deep clone for structured-cloneable values', () => {
