@@ -21,9 +21,6 @@
     },
     "./package.json": "./package.json"
   },
-  "engines": {
-    "node": ">=20"
-  },
   "files": [
     "dist",
     "LICENSE",
@@ -32,7 +29,7 @@
   "sideEffects": false,
   "scripts": {
     "format": "prettier . --write",
-    "build": "tsup",
+    "build": "tsdown",
     "test": "npm run build && node test/run-coverage.mjs && node test/e2e/run.mjs",
     "bench": "npm run build && node benchmark/bench.js",
     "prepare": "husky",
@@ -51,19 +48,19 @@
     ]
   },
   "devDependencies": {
-    "@commitlint/cli": "^21.0.1",
-    "@commitlint/config-conventional": "^21.0.1",
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
     "@playwright/test": "^1.60.0",
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.3",
     "c8": "^11.0.0",
     "edge-runtime": "^4.0.1",
     "fast-glob": "^3.3.3",
     "husky": "^9.1.7",
     "playwright": "^1.60.0",
-    "prettier": "^3.8.3",
-    "tsup": "^8.5.1",
-    "typescript": "^5.9.3",
-    "wrangler": "^4.93.0"
+    "prettier": "^3.8.4",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.100.0"
   },
   "repository": {
     "type": "git",

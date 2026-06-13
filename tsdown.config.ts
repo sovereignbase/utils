@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsup'
+import { defineConfig } from 'tsdown'
 
 const apache2Banner = [
   '/*',
@@ -27,7 +27,6 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   clean: true,
-  splitting: true,
   banner: {
     js: `${apache2Banner}\n`,
   },

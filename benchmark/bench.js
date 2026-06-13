@@ -4,6 +4,7 @@ import {
   afterIdleFor,
   getISO31661Alpha2CountryCodeSet,
   isRecord,
+  isUint32,
   isUuidV7,
   isUuidV7BigInt,
   safeBigIntFromString,
@@ -51,6 +52,8 @@ const results = [
   benchmark('prototype(url)', 2_000_000, () => prototype(urlValue)),
   benchmark('isRecord(record)', 2_000_000, () => isRecord(recordValue)),
   benchmark('isRecord(array)', 2_000_000, () => isRecord([])),
+  benchmark('isUint32(valid)', 2_000_000, () => isUint32(4_294_967_295)),
+  benchmark('isUint32(invalid)', 2_000_000, () => isUint32(4_294_967_296)),
   benchmark('isUuidV7(valid)', 1_000_000, () => isUuidV7(validUuidV7)),
   benchmark('isUuidV7(invalid)', 1_000_000, () => isUuidV7(invalidUuid)),
   benchmark('isUuidV7BigInt(valid)', 2_000_000, () =>

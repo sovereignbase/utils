@@ -12,6 +12,7 @@ const runtimeExports = [
   'browserHasSovereignbaseDependencies',
   'getISO31661Alpha2CountryCodeSet',
   'isRecord',
+  'isUint32',
   'isUuidV7',
   'isUuidV7BigInt',
   'prototype',
@@ -65,6 +66,8 @@ test('esm and cjs entrypoints behave the same', async () => {
   )
   assert.equal(esmApi.isRecord({ ok: true }), cjsApi.isRecord({ ok: true }))
   assert.equal(esmApi.isRecord([]), cjsApi.isRecord([]))
+  assert.equal(esmApi.isUint32(4_294_967_295), cjsApi.isUint32(4_294_967_295))
+  assert.equal(esmApi.isUint32(4_294_967_296), cjsApi.isUint32(4_294_967_296))
   assert.equal(esmApi.safeBigIntFromString('42'), 42n)
   assert.equal(
     esmApi.safeBigIntFromString('not-a-bigint'),

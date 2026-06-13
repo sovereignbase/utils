@@ -93,6 +93,20 @@ if (isRecord(value)) {
 
 Checks that a value is a plain object record: non-null, not an array, and backed by an `Object` constructor prototype.
 
+### `isUint32()`
+
+```ts
+import { isUint32 } from '@sovereignbase/utils'
+
+const value: unknown = 4_294_967_295
+
+if (isUint32(value)) {
+  value // number, confirmed unsigned 32-bit integer
+}
+```
+
+Checks that a value is a JavaScript number representing an integer in the inclusive unsigned 32-bit range, `0` through `2^32 - 1`.
+
 ### `safeBigIntFromString()`
 
 ```ts
@@ -184,40 +198,42 @@ Creates a function that resets a timer on every call and runs the callback after
 
 ## Tests
 
-- Latest local `npm run test` run passed on Node `v22.14.0`.
-- Node unit suite: `15/15` passed.
+- Latest local `npm exec --yes --package deno -- npm run test` run passed on Node `v24.16.0`.
+- Node unit suite: `16/16` passed.
 - Node integration suite: `2/2` passed.
 - Coverage: `100%` statements, branches, functions, and lines.
-- Runtime E2E: Node ESM `17/17` passed.
-- Runtime E2E: Node CJS `17/17` passed.
-- Runtime E2E: Bun ESM `17/17` passed.
-- Runtime E2E: Bun CJS `17/17` passed.
-- Runtime E2E: Deno ESM `17/17` passed.
-- Runtime E2E: Cloudflare Workers ESM `17/17` passed.
-- Runtime E2E: Edge Runtime ESM `17/17` passed.
+- Runtime E2E: Node ESM `18/18` passed.
+- Runtime E2E: Node CJS `18/18` passed.
+- Runtime E2E: Bun ESM `18/18` passed.
+- Runtime E2E: Bun CJS `18/18` passed.
+- Runtime E2E: Deno ESM `18/18` passed.
+- Runtime E2E: Cloudflare Workers ESM `18/18` passed.
+- Runtime E2E: Edge Runtime ESM `18/18` passed.
 - Browser E2E: `5/5` Playwright projects passed (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`).
 
 ## Benchmarks
 
-- Latest local `npm run bench` run: Node `v22.14.0` on `win32 x64`.
+- Latest local `npm run bench` run: Node `v24.16.0` on `win32 x64`.
   | Function / scenario | ops/sec | ms/op |
   | ----------------------------------- | ----------: | ----------: |
-  | `prototype(record)` | 11,402,112 | 0.000087703 |
-  | `prototype(url)` | 6,015,126 | 0.000166248 |
-  | `isRecord(record)` | 21,025,895 | 0.000047560 |
-  | `isRecord(array)` | 128,470,304 | 0.000007784 |
-  | `isUuidV7(valid)` | 6,141,601 | 0.000162824 |
-  | `isUuidV7(invalid)` | 6,548,055 | 0.000152717 |
-  | `isUuidV7BigInt(valid)` | 14,002,141 | 0.000071418 |
-  | `isUuidV7BigInt(invalid)` | 23,886,415 | 0.000041865 |
-  | `safeBigIntFromString(valid)` | 10,990,605 | 0.000090987 |
-  | `safeBigIntFromString(invalid)` | 106,885 | 0.009355836 |
-  | `uuidV7BigIntStringToBigInt(valid)` | 3,574,185 | 0.000279784 |
-  | `uuidV7BigIntStringToBigInt(invalid)` | 3,893,438 | 0.000256842 |
-  | `getISO31661Alpha2CountryCodeSet()` | 99,879 | 0.010012102 |
-  | `safeStructuredClone(record)` | 226,399 | 0.004416974 |
-  | `safeStructuredClone(function)` | 54,352 | 0.018398538 |
-  | `afterIdleFor(callback)` | 2,982,528 | 0.000335286 |
+  | `prototype(record)` | 10,048,999 | 0.000099512 |
+  | `prototype(url)` | 4,919,298 | 0.000203281 |
+  | `isRecord(record)` | 22,128,887 | 0.000045190 |
+  | `isRecord(array)` | 135,978,570 | 0.000007354 |
+  | `isUint32(valid)` | 143,928,381 | 0.000006948 |
+  | `isUint32(invalid)` | 148,897,045 | 0.000006716 |
+  | `isUuidV7(valid)` | 4,852,110 | 0.000206096 |
+  | `isUuidV7(invalid)` | 5,036,241 | 0.000198561 |
+  | `isUuidV7BigInt(valid)` | 17,177,054 | 0.000058217 |
+  | `isUuidV7BigInt(invalid)` | 26,694,821 | 0.000037460 |
+  | `safeBigIntFromString(valid)` | 10,009,579 | 0.000099904 |
+  | `safeBigIntFromString(invalid)` | 101,179 | 0.009883494 |
+  | `uuidV7BigIntStringToBigInt(valid)` | 5,583,083 | 0.000179113 |
+  | `uuidV7BigIntStringToBigInt(invalid)` | 5,467,959 | 0.000182884 |
+  | `getISO31661Alpha2CountryCodeSet()` | 108,364 | 0.009228138 |
+  | `safeStructuredClone(record)` | 226,794 | 0.004409285 |
+  | `safeStructuredClone(function)` | 47,082 | 0.021239342 |
+  | `afterIdleFor(callback)` | 2,602,432 | 0.000384256 |
 
 - Results vary by machine.
 

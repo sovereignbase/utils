@@ -7,6 +7,7 @@ import {
   browserHasSovereignbaseDependencies,
   getISO31661Alpha2CountryCodeSet,
   isRecord,
+  isUint32,
   isUuidV7,
   isUuidV7BigInt,
   safeBigIntFromString,
@@ -194,6 +195,21 @@ test('isRecord accepts only plain object records', () => {
   assert.equal(isRecord(null), false)
   assert.equal(isRecord(undefined), false)
   assert.equal(isRecord('record'), false)
+})
+
+test('isUint32 accepts only unsigned 32-bit integer numbers', () => {
+  assert.equal(isUint32(0), true)
+  assert.equal(isUint32(-0), true)
+  assert.equal(isUint32(1), true)
+  assert.equal(isUint32(4_294_967_295), true)
+  assert.equal(isUint32(-1), false)
+  assert.equal(isUint32(4_294_967_296), false)
+  assert.equal(isUint32(1.5), false)
+  assert.equal(isUint32(Number.NaN), false)
+  assert.equal(isUint32(Number.POSITIVE_INFINITY), false)
+  assert.equal(isUint32('1'), false)
+  assert.equal(isUint32(1n), false)
+  assert.equal(isUint32(null), false)
 })
 
 test('safeBigIntFromString returns parsed bigints without throwing', () => {

@@ -47,6 +47,7 @@ export async function runUtilsSuite(api, options = {}) {
     browserHasSovereignbaseDependencies,
     getISO31661Alpha2CountryCodeSet,
     isRecord,
+    isUint32,
     prototype,
     isUuidV7,
     isUuidV7BigInt,
@@ -112,6 +113,7 @@ export async function runUtilsSuite(api, options = {}) {
     )
     assert(typeof prototype === 'function', 'prototype export missing')
     assert(typeof isRecord === 'function', 'isRecord export missing')
+    assert(typeof isUint32 === 'function', 'isUint32 export missing')
     assert(typeof isUuidV7 === 'function', 'isUuidV7 export missing')
     assert(
       typeof isUuidV7BigInt === 'function',
@@ -269,6 +271,19 @@ export async function runUtilsSuite(api, options = {}) {
     assertEqual(isRecord(null), false)
     assertEqual(isRecord(undefined), false)
     assertEqual(isRecord('record'), false)
+  })
+
+  await runTest('isUint32 accepts only unsigned 32-bit integer numbers', () => {
+    assertEqual(isUint32(0), true)
+    assertEqual(isUint32(-0), true)
+    assertEqual(isUint32(4_294_967_295), true)
+    assertEqual(isUint32(-1), false)
+    assertEqual(isUint32(4_294_967_296), false)
+    assertEqual(isUint32(1.5), false)
+    assertEqual(isUint32(Number.NaN), false)
+    assertEqual(isUint32('1'), false)
+    assertEqual(isUint32(1n), false)
+    assertEqual(isUint32(null), false)
   })
 
   await runTest('safeBigIntFromString returns parsed bigints', () => {
