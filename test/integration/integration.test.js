@@ -8,6 +8,9 @@ const require = createRequire(import.meta.url)
 const cjsApi = require('../../dist/index.cjs')
 
 const runtimeExports = [
+  'UINT32_MAX',
+  'UINT32_MIN',
+  'UINT32_SIZE',
   'afterIdleFor',
   'browserHasSovereignbaseDependencies',
   'getISO31661Alpha2CountryCodeSet',
