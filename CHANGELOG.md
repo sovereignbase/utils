@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/sovereignbase/utils/compare/v1.5.0...v1.5.1) (2026-06-13)
+
+
+### Bug Fixes
+
+* tests to expect new exports ([45066bc](https://github.com/sovereignbase/utils/commit/45066bc9b89a4c51746530e961f8799bcdc2e937))
+
 ## [1.5.0](https://github.com/sovereignbase/utils/compare/v1.4.0...v1.5.0) (2026-06-13)
 
 
