@@ -96,7 +96,12 @@ Checks that a value is a plain object record: non-null, not an array, and backed
 ### `isUint32()`
 
 ```ts
-import { isUint32 } from '@sovereignbase/utils'
+import {
+  isUint32,
+  UINT32_MIN,
+  UINT32_MAX,
+  UINT32_SIZE,
+} from '@sovereignbase/utils'
 
 const value: unknown = 4_294_967_295
 

@@ -1,5 +1,6 @@
-const UINT32_MIN = 0
-const UINT32_MAX = 4_294_967_295
+export const UINT32_MIN = 0
+export const UINT32_MAX = 4_294_967_295
+export const UINT32_SIZE = 4_294_967_296
 
 /**
  * Determines whether `value` is an unsigned 32-bit integer number.

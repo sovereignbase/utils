@@ -11,4 +11,9 @@ export { isRecord } from './isRecord/index.js'
 export { isUuidV7BigInt } from './isUuidV7BigInt/index.js'
 export { safeBigIntFromString } from './safeBigIntFromString/index.js'
 export { uuidV7BigIntStringToBigInt } from './uuidV7BigIntStringToBigInt/index.js'
-export { isUint32 } from './isUint32/index.js'
+export {
+  isUint32,
+  UINT32_MIN,
+  UINT32_MAX,
+  UINT32_SIZE,
+} from './isUint32/index.js'
