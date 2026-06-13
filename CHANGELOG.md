@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/sovereignbase/utils/compare/v1.4.0...v1.5.0) (2026-06-13)
+
+
+### Features
+
+* add is uint32 method ([8b72707](https://github.com/sovereignbase/utils/commit/8b72707015c79c11d8a13169de81029f8dba2ea4))
+
 ## [1.4.0](https://github.com/sovereignbase/utils/compare/v1.3.1...v1.4.0) (2026-05-24)
 
 
