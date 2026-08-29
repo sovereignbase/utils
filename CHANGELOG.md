@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/sovereignbase/utils/compare/v1.5.1...v1.6.0) (2026-08-29)
+
+
+### Features
+
+* add deterministic byte derivation ([634c52a](https://github.com/sovereignbase/utils/commit/634c52acad6f0625babab36526398585c6794069))
+
 ## [1.5.1](https://github.com/sovereignbase/utils/compare/v1.5.0...v1.5.1) (2026-06-13)
 
 
