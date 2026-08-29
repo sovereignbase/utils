@@ -1,6 +1,6 @@
-import test from 'node:test'
 import assert from 'node:assert/strict'
 import { createRequire } from 'node:module'
+import { test } from 'vitest'
 
 import * as esmApi from '../../dist/index.js'
 
@@ -13,6 +13,7 @@ const runtimeExports = [
   'UINT32_SIZE',
   'afterIdleFor',
   'browserHasSovereignbaseDependencies',
+  'deriveBytes',
   'getISO31661Alpha2CountryCodeSet',
   'isRecord',
   'isUint32',
@@ -114,4 +115,11 @@ test('esm and cjs entrypoints behave the same', async () => {
 
   assert.equal(typeof esmApi.afterIdleFor(1, () => {}), 'function')
   assert.equal(typeof cjsApi.afterIdleFor(1, () => {}), 'function')
+
+  const base = new Uint8Array([1, 2, 3])
+  const domain = new Uint8Array([4, 5, 6])
+  assert.deepEqual(
+    await esmApi.deriveBytes(base, domain, 16),
+    await cjsApi.deriveBytes(base, domain, 16)
+  )
 })

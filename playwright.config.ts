@@ -10,14 +10,19 @@ const webServer = process.env.PLAYWRIGHT_BASE_URL
         ...process.env,
         PORT: new URL(baseURL).port || '4173',
       },
-      reuseExistingServer: true,
+      reuseExistingServer: !process.env.CI,
     }
 
 export default defineConfig({
   testDir: 'test/e2e/runsInBrowsers',
-  timeout: 30000,
+  testMatch: '**/*.spec.js',
+  timeout: 30_000,
+  fullyParallel: true,
+  forbidOnly: Boolean(process.env.CI),
+  retries: process.env.CI ? 2 : 0,
   use: {
     baseURL,
+    trace: 'retain-on-failure',
   },
   webServer,
   projects: [
@@ -34,12 +39,20 @@ export default defineConfig({
       use: { browserName: 'webkit' },
     },
     {
-      name: 'mobile-chrome',
-      use: { ...devices['Pixel 5'] },
+      name: 'mobile-chromium',
+      use: { ...devices['Pixel 7'] },
     },
     {
-      name: 'mobile-safari',
-      use: { ...devices['iPhone 12'] },
+      name: 'mobile-firefox',
+      use: {
+        browserName: 'firefox',
+        viewport: { width: 390, height: 844 },
+        hasTouch: true,
+      },
+    },
+    {
+      name: 'mobile-webkit',
+      use: { ...devices['iPhone 15'] },
     },
   ],
 })

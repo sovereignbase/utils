@@ -1,10 +1,11 @@
-import test from 'node:test'
 import assert from 'node:assert/strict'
 import { runInNewContext } from 'node:vm'
+import { test } from 'vitest'
 
 import {
   afterIdleFor,
   browserHasSovereignbaseDependencies,
+  deriveBytes,
   getISO31661Alpha2CountryCodeSet,
   isRecord,
   isUint32,
@@ -15,6 +16,12 @@ import {
   safeStructuredClone,
   uuidV7BigIntStringToBigInt,
 } from '../../dist/index.js'
+
+function toHex(bytes) {
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join(
+    ''
+  )
+}
 
 const BROWSER_GLOBAL_NAMES = [
   'window',
@@ -221,6 +228,29 @@ test('safeBigIntFromString returns parsed bigints without throwing', () => {
   assert.equal(safeBigIntFromString('1.5'), false)
   assert.equal(safeBigIntFromString('1n'), false)
   assert.equal(safeBigIntFromString('not-a-bigint'), false)
+})
+
+test('deriveBytes matches a stable HKDF-SHA-256 test vector', async () => {
+  const bytes = await deriveBytes(
+    new Uint8Array([10, 11, 12]),
+    new Uint8Array([13, 14, 15]),
+    32
+  )
+
+  assert.equal(bytes.byteLength, 32)
+  assert.equal(
+    toHex(bytes),
+    'aadcc1865ab67c377b2cbceef2578cb09806ac4833f0dd026b7bc97667189121'
+  )
+})
+
+test('deriveBytes separates domains and rejects invalid lengths', async () => {
+  const base = new Uint8Array([1, 2, 3])
+  const first = await deriveBytes(base, new Uint8Array([4]), 16)
+  const second = await deriveBytes(base, new Uint8Array([5]), 16)
+
+  assert.notDeepEqual(first, second)
+  await assert.rejects(deriveBytes(base, new Uint8Array([4]), -1))
 })
 
 test('uuidV7BigIntStringToBigInt returns only valid UUID v7 bigints', () => {

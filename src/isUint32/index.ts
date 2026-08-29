@@ -1,5 +1,8 @@
+/** Smallest unsigned 32-bit integer. */
 export const UINT32_MIN = 0
+/** Largest unsigned 32-bit integer. */
 export const UINT32_MAX = 4_294_967_295
+/** Number of distinct unsigned 32-bit integer values. */
 export const UINT32_SIZE = 4_294_967_296
 
 /**

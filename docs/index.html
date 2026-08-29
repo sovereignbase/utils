@@ -1,0 +1,162 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@sovereignbase/utils</title><link rel="icon" href="https://sovereignbase.dev/sovereignbase_logo.png"/><meta name="description" content="Documentation for @sovereignbase/utils"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="index.html" class="title">@sovereignbase/utils</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<h1>@sovereignbase/utils</h1></div>
+<div class="tsd-panel tsd-typography"><p><a href="https://www.npmjs.com/package/@sovereignbase/utils"><img src="https://img.shields.io/npm/v/@sovereignbase/utils" alt="npm version"></a>
+<a href="https://jsr.io/@sovereignbase/utils"><img src="https://jsr.io/badges/@sovereignbase/utils" alt="JSR"></a>
+<a href="https://github.com/sovereignbase/utils/actions/workflows/ci.yaml"><img src="https://github.com/sovereignbase/utils/actions/workflows/ci.yaml/badge.svg?branch=master" alt="CI"></a>
+<a href="https://codecov.io/gh/sovereignbase/utils"><img src="https://codecov.io/gh/sovereignbase/utils/branch/master/graph/badge.svg" alt="codecov"></a>
+<a href="LICENSE"><img src="https://img.shields.io/npm/l/@sovereignbase/utils" alt="license"></a></p>
+<h1 id="utils" class="tsd-anchor-link">utils<a href="#utils" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<p>Shared TypeScript utilities for removing repeated code across Sovereignbase codebases.</p>
+<h2 id="compatibility" class="tsd-anchor-link">Compatibility<a href="#compatibility" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ul>
+<li>Runtimes: modern JavaScript runtimes; the repository includes runtime compatibility tests for Node, Bun, Deno, Cloudflare Workers, Edge Runtime, and browsers.</li>
+<li>Module format: ESM and CommonJS.</li>
+<li>Required globals / APIs: Web Crypto is required by <code>deriveBytes()</code>, and
+<code>structuredClone</code> is required for successful <code>safeStructuredClone()</code> results.</li>
+<li>Browser capability checks: <code>browserHasSovereignbaseDependencies()</code> resolves to <code>false</code> outside secure browser contexts and when required browser APIs are missing.</li>
+<li>TypeScript: bundled types.</li>
+</ul>
+<h2 id="goals" class="tsd-anchor-link">Goals<a href="#goals" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ul>
+<li>Remove repeated utility code from Sovereignbase repositories.</li>
+<li>Keep shared helpers small, explicit, and side-effect free.</li>
+<li>Validate behavior across the runtimes used in Sovereignbase projects.</li>
+</ul>
+<h2 id="installation" class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<pre><code class="sh"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">@sovereignbase/utils</span><br/><span class="hl-3"># or</span><br/><span class="hl-0">pnpm</span><span class="hl-1"> </span><span class="hl-2">add</span><span class="hl-1"> </span><span class="hl-2">@sovereignbase/utils</span><br/><span class="hl-3"># or</span><br/><span class="hl-0">yarn</span><span class="hl-1"> </span><span class="hl-2">add</span><span class="hl-1"> </span><span class="hl-2">@sovereignbase/utils</span><br/><span class="hl-3"># or</span><br/><span class="hl-0">bun</span><span class="hl-1"> </span><span class="hl-2">add</span><span class="hl-1"> </span><span class="hl-2">@sovereignbase/utils</span><br/><span class="hl-3"># or</span><br/><span class="hl-0">deno</span><span class="hl-1"> </span><span class="hl-2">add</span><span class="hl-1"> </span><span class="hl-2">jsr:@sovereignbase/utils</span><br/><span class="hl-3"># or</span><br/><span class="hl-0">vlt</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">jsr:@sovereignbase/utils</span>
+</code><button type="button">Copy</button></pre>
+
+<h2 id="usage" class="tsd-anchor-link">Usage<a href="#usage" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<h3 id="_" class="tsd-anchor-link"><code>deriveBytes()</code><a href="#_" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">deriveBytes</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">encoder</span><span class="hl-1"> = </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">TextEncoder</span><span class="hl-1">()</span><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">bytes</span><span class="hl-1"> = </span><span class="hl-4">await</span><span class="hl-1"> </span><span class="hl-0">deriveBytes</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-5">encoder</span><span class="hl-1">.</span><span class="hl-0">encode</span><span class="hl-1">(</span><span class="hl-2">&#39;account-1&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">  </span><span class="hl-5">encoder</span><span class="hl-1">.</span><span class="hl-0">encode</span><span class="hl-1">(</span><span class="hl-2">&#39;profile-encryption&#39;</span><span class="hl-1">),</span><br/><span class="hl-1">  </span><span class="hl-8">32</span><br/><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Derives a deterministic number of domain-separated bytes with HKDF-SHA-256.
+Identical base, domain, and length inputs produce identical output. Use a
+distinct domain for each purpose.</p>
+<h3 id="_-1" class="tsd-anchor-link"><code>prototype()</code><a href="#_-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">prototype</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-0">prototype</span><span class="hl-1">(</span><span class="hl-6">null</span><span class="hl-1">) </span><span class="hl-3">// &#39;null&#39;</span><br/><span class="hl-0">prototype</span><span class="hl-1">({ </span><span class="hl-5">ok:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> }) </span><span class="hl-3">// &#39;record&#39;</span><br/><span class="hl-0">prototype</span><span class="hl-1">(</span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">URL</span><span class="hl-1">(</span><span class="hl-2">&#39;https://sovereignbase.dev&#39;</span><span class="hl-1">)) </span><span class="hl-3">// &#39;url&#39;</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Returns a normalized lowercase runtime tag for common primitives, serializable built-ins, and selected platform objects.</p>
+<h3 id="_-2" class="tsd-anchor-link"><code>isUuidV7()</code><a href="#_-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">isUuidV7</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">value</span><span class="hl-1"> = </span><span class="hl-2">&#39;018f0d1e-6c82-7d4b-91c1-8a7b5e2f4a10&#39;</span><br/><br/><span class="hl-4">if</span><span class="hl-1"> (</span><span class="hl-0">isUuidV7</span><span class="hl-1">(</span><span class="hl-5">value</span><span class="hl-1">)) {</span><br/><span class="hl-1">  </span><span class="hl-5">value</span><span class="hl-1"> </span><span class="hl-3">// string, confirmed UUID v7</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Checks that a value is a syntactically valid UUID version 7 string.</p>
+<h3 id="_-3" class="tsd-anchor-link"><code>isUuidV7BigInt()</code><a href="#_-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">isUuidV7BigInt</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">value</span><span class="hl-1"> = </span><span class="hl-8">0x018f0d1e6c827d4b91c18a7b5e2f4a10</span><span class="hl-6">n</span><br/><br/><span class="hl-4">if</span><span class="hl-1"> (</span><span class="hl-0">isUuidV7BigInt</span><span class="hl-1">(</span><span class="hl-5">value</span><span class="hl-1">)) {</span><br/><span class="hl-1">  </span><span class="hl-5">value</span><span class="hl-1"> </span><span class="hl-3">// bigint, confirmed UUID v7 bit layout</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Checks that a bigint is inside the 128-bit UUID range and has UUID version 7 and RFC 4122 variant bits.</p>
+<h3 id="_-4" class="tsd-anchor-link"><code>isRecord()</code><a href="#_-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">isRecord</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">value</span><span class="hl-1">: </span><span class="hl-9">unknown</span><span class="hl-1"> = { </span><span class="hl-5">ok:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1"> }</span><br/><br/><span class="hl-4">if</span><span class="hl-1"> (</span><span class="hl-0">isRecord</span><span class="hl-1">(</span><span class="hl-5">value</span><span class="hl-1">)) {</span><br/><span class="hl-1">  </span><span class="hl-5">value</span><span class="hl-1">.</span><span class="hl-5">ok</span><span class="hl-1"> </span><span class="hl-3">// unknown</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Checks that a value is a plain object record: non-null, not an array, and backed by an <code>Object</code> constructor prototype.</p>
+<h3 id="_-5" class="tsd-anchor-link"><code>isUint32()</code><a href="#_-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">isUint32</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">UINT32_MIN</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">UINT32_MAX</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">UINT32_SIZE</span><span class="hl-1">,</span><br/><span class="hl-1">} </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">value</span><span class="hl-1">: </span><span class="hl-9">unknown</span><span class="hl-1"> = </span><span class="hl-8">4_294_967_295</span><br/><br/><span class="hl-4">if</span><span class="hl-1"> (</span><span class="hl-0">isUint32</span><span class="hl-1">(</span><span class="hl-5">value</span><span class="hl-1">)) {</span><br/><span class="hl-1">  </span><span class="hl-5">value</span><span class="hl-1"> </span><span class="hl-3">// number, confirmed unsigned 32-bit integer</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Checks that a value is a JavaScript number representing an integer in the inclusive unsigned 32-bit range, <code>0</code> through <code>2^32 - 1</code>.</p>
+<h3 id="_-6" class="tsd-anchor-link"><code>safeBigIntFromString()</code><a href="#_-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">safeBigIntFromString</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">result</span><span class="hl-1"> = </span><span class="hl-0">safeBigIntFromString</span><span class="hl-1">(</span><span class="hl-2">&#39;9007199254740993&#39;</span><span class="hl-1">)</span><br/><br/><span class="hl-4">if</span><span class="hl-1"> (</span><span class="hl-5">result</span><span class="hl-1"> !== </span><span class="hl-6">false</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-5">result</span><span class="hl-1"> </span><span class="hl-3">// 9007199254740993n</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Converts a string to a bigint using JavaScript <code>BigInt()</code> string conversion semantics and returns <code>false</code> instead of throwing for invalid input.</p>
+<h3 id="_-7" class="tsd-anchor-link"><code>uuidV7BigIntStringToBigInt()</code><a href="#_-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">uuidV7BigIntStringToBigInt</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">value</span><span class="hl-1"> = </span><span class="hl-0">uuidV7BigIntStringToBigInt</span><span class="hl-1">(</span><br/><span class="hl-1">  </span><span class="hl-2">&#39;2071992528307252230503468673270762000&#39;</span><br/><span class="hl-1">)</span><br/><br/><span class="hl-4">if</span><span class="hl-1"> (</span><span class="hl-5">value</span><span class="hl-1"> !== </span><span class="hl-6">false</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-5">value</span><span class="hl-1"> </span><span class="hl-3">// bigint, confirmed UUID v7 bit layout</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Converts a bigint string to a bigint and returns it only when the resulting value has a UUID v7 bit layout.</p>
+<h3 id="_-8" class="tsd-anchor-link"><code>safeStructuredClone()</code><a href="#_-8" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">safeStructuredClone</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">result</span><span class="hl-1"> = </span><span class="hl-0">safeStructuredClone</span><span class="hl-1">({ </span><span class="hl-5">ok:</span><span class="hl-1"> </span><span class="hl-6">true</span><span class="hl-1">, </span><span class="hl-5">nested:</span><span class="hl-1"> { </span><span class="hl-5">count:</span><span class="hl-1"> </span><span class="hl-8">1</span><span class="hl-1"> } })</span><br/><br/><span class="hl-4">if</span><span class="hl-1"> (</span><span class="hl-5">result</span><span class="hl-1">[</span><span class="hl-8">0</span><span class="hl-1">]) {</span><br/><span class="hl-1">  </span><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">clone</span><span class="hl-1"> = </span><span class="hl-5">result</span><span class="hl-1">[</span><span class="hl-8">1</span><span class="hl-1">]</span><br/><span class="hl-1">  </span><span class="hl-5">clone</span><span class="hl-1"> </span><span class="hl-3">// deep cloned value</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Attempts a structured clone and returns a tuple instead of throwing on unsupported values.</p>
+<h3 id="_-9" class="tsd-anchor-link"><code>getISO31661Alpha2CountryCodeSet()</code><a href="#_-9" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">type</span><span class="hl-1"> </span><span class="hl-5">ISO31661Alpha2</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-5">getISO31661Alpha2CountryCodeSet</span><span class="hl-1">,</span><br/><span class="hl-1">} </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">function</span><span class="hl-1"> </span><span class="hl-0">epicFunction1</span><span class="hl-1">(</span><span class="hl-5">countryCode</span><span class="hl-1">: </span><span class="hl-9">ISO31661Alpha2</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">countryCodes</span><span class="hl-1"> = </span><span class="hl-0">getISO31661Alpha2CountryCodeSet</span><span class="hl-1">()</span><br/><span class="hl-1">  </span><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">isCountryCode</span><span class="hl-1"> = </span><span class="hl-5">countryCodes</span><span class="hl-1">.</span><span class="hl-0">has</span><span class="hl-1">(</span><span class="hl-5">countryCode</span><span class="hl-1">)</span><br/><span class="hl-1">  </span><span class="hl-4">if</span><span class="hl-1"> (!</span><span class="hl-5">isCountryCode</span><span class="hl-1">) </span><span class="hl-4">throw</span><span class="hl-1"> </span><span class="hl-6">new</span><span class="hl-1"> </span><span class="hl-0">Error</span><span class="hl-1">(</span><span class="hl-2">&#39;THAT IS NOT A COUNTRY CODE DUDE!&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">  </span><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;EPIC COUNTRY CODE MOMENT:&#39;</span><span class="hl-1">, </span><span class="hl-5">countryCode</span><span class="hl-1">)</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Returns a fresh <code>Set</code> containing all supported ISO 3166-1 alpha-2 country codes.</p>
+<h3 id="_-10" class="tsd-anchor-link"><code>browserHasSovereignbaseDependencies()</code><a href="#_-10" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">browserHasSovereignbaseDependencies</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-4">if</span><span class="hl-1"> (</span><span class="hl-4">await</span><span class="hl-1"> </span><span class="hl-0">browserHasSovereignbaseDependencies</span><span class="hl-1">()) {</span><br/><span class="hl-1">  </span><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;browser runtime supports Sovereignbase dependencies&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Checks whether the current browser environment exposes the secure-context, storage, worker, notification, Web Crypto, and WebAuthn APIs required by Sovereignbase browser features.</p>
+<h3 id="_-11" class="tsd-anchor-link"><code>afterIdleFor()</code><a href="#_-11" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">afterIdleFor</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">saveAfterTypingStops</span><span class="hl-1"> = </span><span class="hl-0">afterIdleFor</span><span class="hl-1">(</span><span class="hl-8">500</span><span class="hl-1">, () </span><span class="hl-6">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-5">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;save draft&#39;</span><span class="hl-1">)</span><br/><span class="hl-1">})</span><br/><br/><span class="hl-5">document</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-2">&#39;input&#39;</span><span class="hl-1">, </span><span class="hl-5">saveAfterTypingStops</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Creates a function that resets a timer on every call and runs the callback after the requested idle timeout.</p>
+<h2 id="tests" class="tsd-anchor-link">Tests<a href="#tests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<ul>
+<li>Unit and integration tests in Vitest with 100% statement, branch, function,
+and line coverage.</li>
+<li>Public TypeScript API typechecks under the package's strict configuration.</li>
+<li>Browser E2E tests in Chromium, Firefox, WebKit, Mobile Chromium, Mobile
+Firefox, and Mobile WebKit.</li>
+<li>Runtime E2E tests in Node.js ESM and CommonJS, Bun ESM and CommonJS, Deno,
+Vercel Edge Runtime, and Cloudflare Workers (<code>workerd</code>).</li>
+</ul>
+<h2 id="api-documentation" class="tsd-anchor-link">API documentation<a href="#api-documentation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>TypeDoc documentation is generated into <code>docs/</code> by <code>npm run build:docs</code> and as
+part of the normal build.</p>
+<h2 id="benchmarks" class="tsd-anchor-link">Benchmarks<a href="#benchmarks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Run <code>npm run bench</code> to benchmark the synchronous utility paths on the current
+machine.</p>
+<h2 id="license" class="tsd-anchor-link">License<a href="#license" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>Apache-2.0</p>
+</div></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#utils"><span>utils</span></a>
+<ul>
+<li><a href="#compatibility"><span>Compatibility</span></a></li>
+<li><a href="#goals"><span>Goals</span></a></li>
+<li><a href="#installation"><span>Installation</span></a></li>
+<li><a href="#usage"><span>Usage</span></a></li>
+<li>
+<ul>
+<li><a href="#_"><span></span></a></li>
+<li><a href="#_-1"><span></span></a></li>
+<li><a href="#_-2"><span></span></a></li>
+<li><a href="#_-3"><span></span></a></li>
+<li><a href="#_-4"><span></span></a></li>
+<li><a href="#_-5"><span></span></a></li>
+<li><a href="#_-6"><span></span></a></li>
+<li><a href="#_-7"><span></span></a></li>
+<li><a href="#_-8"><span></span></a></li>
+<li><a href="#_-9"><span></span></a></li>
+<li><a href="#_-10"><span></span></a></li>
+<li><a href="#_-11"><span></span></a></li></ul></li>
+<li><a href="#tests"><span>Tests</span></a></li>
+<li><a href="#api-documentation"><span>API documentation</span></a></li>
+<li><a href="#benchmarks"><span>Benchmarks</span></a></li>
+<li><a href="#license"><span>License</span></a></li></ul></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="modules.html">@sovereignbase/utils</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer>
+<p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer>
+<div class="overlay"></div></body></html>

@@ -1,4 +1,5 @@
 [![npm version](https://img.shields.io/npm/v/@sovereignbase/utils)](https://www.npmjs.com/package/@sovereignbase/utils)
+[![JSR](https://jsr.io/badges/@sovereignbase/utils)](https://jsr.io/@sovereignbase/utils)
 [![CI](https://github.com/sovereignbase/utils/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/sovereignbase/utils/actions/workflows/ci.yaml)
 [![codecov](https://codecov.io/gh/sovereignbase/utils/branch/master/graph/badge.svg)](https://codecov.io/gh/sovereignbase/utils)
 [![license](https://img.shields.io/npm/l/@sovereignbase/utils)](LICENSE)
@@ -11,7 +12,8 @@ Shared TypeScript utilities for removing repeated code across Sovereignbase code
 
 - Runtimes: modern JavaScript runtimes; the repository includes runtime compatibility tests for Node, Bun, Deno, Cloudflare Workers, Edge Runtime, and browsers.
 - Module format: ESM and CommonJS.
-- Required globals / APIs: `structuredClone` is required for successful `safeStructuredClone()` results.
+- Required globals / APIs: Web Crypto is required by `deriveBytes()`, and
+  `structuredClone` is required for successful `safeStructuredClone()` results.
 - Browser capability checks: `browserHasSovereignbaseDependencies()` resolves to `false` outside secure browser contexts and when required browser APIs are missing.
 - TypeScript: bundled types.
 
@@ -38,6 +40,23 @@ vlt install jsr:@sovereignbase/utils
 ```
 
 ## Usage
+
+### `deriveBytes()`
+
+```ts
+import { deriveBytes } from '@sovereignbase/utils'
+
+const encoder = new TextEncoder()
+const bytes = await deriveBytes(
+  encoder.encode('account-1'),
+  encoder.encode('profile-encryption'),
+  32
+)
+```
+
+Derives a deterministic number of domain-separated bytes with HKDF-SHA-256.
+Identical base, domain, and length inputs produce identical output. Use a
+distinct domain for each purpose.
 
 ### `prototype()`
 
@@ -163,7 +182,7 @@ Attempts a structured clone and returns a tuple instead of throwing on unsupport
 import {
   type ISO31661Alpha2,
   getISO31661Alpha2CountryCodeSet,
-} from '@sovereignbase/country-codes'
+} from '@sovereignbase/utils'
 
 function epicFunction1(countryCode: ISO31661Alpha2) {
   const countryCodes = getISO31661Alpha2CountryCodeSet()
@@ -203,44 +222,23 @@ Creates a function that resets a timer on every call and runs the callback after
 
 ## Tests
 
-- Latest local `npm exec --yes --package deno -- npm run test` run passed on Node `v24.16.0`.
-- Node unit suite: `16/16` passed.
-- Node integration suite: `2/2` passed.
-- Coverage: `100%` statements, branches, functions, and lines.
-- Runtime E2E: Node ESM `18/18` passed.
-- Runtime E2E: Node CJS `18/18` passed.
-- Runtime E2E: Bun ESM `18/18` passed.
-- Runtime E2E: Bun CJS `18/18` passed.
-- Runtime E2E: Deno ESM `18/18` passed.
-- Runtime E2E: Cloudflare Workers ESM `18/18` passed.
-- Runtime E2E: Edge Runtime ESM `18/18` passed.
-- Browser E2E: `5/5` Playwright projects passed (`chromium`, `firefox`, `webkit`, `mobile-chrome`, `mobile-safari`).
+- Unit and integration tests in Vitest with 100% statement, branch, function,
+  and line coverage.
+- Public TypeScript API typechecks under the package's strict configuration.
+- Browser E2E tests in Chromium, Firefox, WebKit, Mobile Chromium, Mobile
+  Firefox, and Mobile WebKit.
+- Runtime E2E tests in Node.js ESM and CommonJS, Bun ESM and CommonJS, Deno,
+  Vercel Edge Runtime, and Cloudflare Workers (`workerd`).
+
+## API documentation
+
+TypeDoc documentation is generated into `docs/` by `npm run build:docs` and as
+part of the normal build.
 
 ## Benchmarks
 
-- Latest local `npm run bench` run: Node `v24.16.0` on `win32 x64`.
-  | Function / scenario | ops/sec | ms/op |
-  | ----------------------------------- | ----------: | ----------: |
-  | `prototype(record)` | 10,048,999 | 0.000099512 |
-  | `prototype(url)` | 4,919,298 | 0.000203281 |
-  | `isRecord(record)` | 22,128,887 | 0.000045190 |
-  | `isRecord(array)` | 135,978,570 | 0.000007354 |
-  | `isUint32(valid)` | 143,928,381 | 0.000006948 |
-  | `isUint32(invalid)` | 148,897,045 | 0.000006716 |
-  | `isUuidV7(valid)` | 4,852,110 | 0.000206096 |
-  | `isUuidV7(invalid)` | 5,036,241 | 0.000198561 |
-  | `isUuidV7BigInt(valid)` | 17,177,054 | 0.000058217 |
-  | `isUuidV7BigInt(invalid)` | 26,694,821 | 0.000037460 |
-  | `safeBigIntFromString(valid)` | 10,009,579 | 0.000099904 |
-  | `safeBigIntFromString(invalid)` | 101,179 | 0.009883494 |
-  | `uuidV7BigIntStringToBigInt(valid)` | 5,583,083 | 0.000179113 |
-  | `uuidV7BigIntStringToBigInt(invalid)` | 5,467,959 | 0.000182884 |
-  | `getISO31661Alpha2CountryCodeSet()` | 108,364 | 0.009228138 |
-  | `safeStructuredClone(record)` | 226,794 | 0.004409285 |
-  | `safeStructuredClone(function)` | 47,082 | 0.021239342 |
-  | `afterIdleFor(callback)` | 2,602,432 | 0.000384256 |
-
-- Results vary by machine.
+Run `npm run bench` to benchmark the synchronous utility paths on the current
+machine.
 
 ## License
 

@@ -45,6 +45,7 @@ export async function runUtilsSuite(api, options = {}) {
   const {
     afterIdleFor,
     browserHasSovereignbaseDependencies,
+    deriveBytes,
     getISO31661Alpha2CountryCodeSet,
     isRecord,
     isUint32,
@@ -107,6 +108,7 @@ export async function runUtilsSuite(api, options = {}) {
       'browserHasSovereignbaseDependencies export missing'
     )
     assert(typeof afterIdleFor === 'function', 'afterIdleFor export missing')
+    assert(typeof deriveBytes === 'function', 'deriveBytes export missing')
     assert(
       typeof getISO31661Alpha2CountryCodeSet === 'function',
       'getISO31661Alpha2CountryCodeSet export missing'
@@ -297,6 +299,24 @@ export async function runUtilsSuite(api, options = {}) {
     assertEqual(hexadecimal, 16n)
     assertEqual(invalid, false)
   })
+
+  await runTest(
+    'deriveBytes derives deterministic domain-separated bytes',
+    async () => {
+      const base = new Uint8Array([10, 11, 12])
+      const domain = new Uint8Array([13, 14, 15])
+      const first = await deriveBytes(base, domain, 32)
+      const second = await deriveBytes(base, domain, 32)
+      const separated = await deriveBytes(base, new Uint8Array([16]), 32)
+
+      assertEqual(first.byteLength, 32)
+      assertEqual(Array.from(first).join(','), Array.from(second).join(','))
+      assert(
+        Array.from(first).join(',') !== Array.from(separated).join(','),
+        'expected different domains to derive different bytes'
+      )
+    }
+  )
 
   await runTest(
     'uuidV7BigIntStringToBigInt returns only valid UUID v7 bigints',
