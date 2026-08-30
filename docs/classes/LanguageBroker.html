@@ -26,11 +26,11 @@ language tag, invokes the optional change callback, and dispatches a typed
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
 <ul class="tsd-type-parameter-list">
-<li><span id="supportedlanguages"><span class="tsd-signature-keyword">const</span> <span class="tsd-kind-type-parameter">SupportedLanguages</span> <span class="tsd-signature-keyword">extends</span> <span class="tsd-signature-keyword">readonly</span> <a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">[]</span></span>
+<li><span id="supportedlanguages"><span class="tsd-signature-keyword">const</span> <span class="tsd-kind-type-parameter">SupportedLanguages</span> <span class="tsd-signature-keyword">extends</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">,</span> <span class="tsd-signature-symbol">...</span><a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span></span>
 <div class="tsd-comment tsd-typography"><p>The readonly list whose entries determine the supported language union.</p>
 </div></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/6a216f82306eda3705be8ee63074ce5e977605d6/src/LanguageBroker/index.ts#L31">LanguageBroker/index.ts:31</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/9bb21c3ee630979071d3cf67135b4de9ac8e404b/src/LanguageBroker/index.ts#L31">LanguageBroker/index.ts:31</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -56,31 +56,31 @@ language tag, invokes the optional change callback, and dispatches a typed
 <h3 class="tsd-anchor-link" id="constructor"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
 <li class="">
-<div class="tsd-signature tsd-anchor-link" id="constructorlanguagebroker"><span class="tsd-signature-keyword">new</span> <span class="tsd-kind-constructor-signature">LanguageBroker</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-keyword">const</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#constructorlanguagebrokersupportedlanguages">SupportedLanguages</a> <span class="tsd-signature-keyword">extends</span> <span class="tsd-signature-keyword">readonly</span> <a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">initialLanguage</span><span class="tsd-signature-symbol">:</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">supportedLanguages</span><span class="tsd-signature-symbol">:</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">onchange</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">language</span><span class="tsd-signature-symbol">:</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-class">LanguageBroker</a><span class="tsd-signature-symbol">&lt;</span><a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">&gt;</span><a href="#constructorlanguagebroker" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-signature tsd-anchor-link" id="constructorlanguagebroker"><span class="tsd-signature-keyword">new</span> <span class="tsd-kind-constructor-signature">LanguageBroker</span><span class="tsd-signature-symbol">&lt;</span><br/>    <span class="tsd-signature-keyword">const</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#constructorlanguagebrokersupportedlanguages">SupportedLanguages</a> <span class="tsd-signature-keyword">extends</span><br/>        <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">,</span> <a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">initialLanguage</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">supportedLanguages</span><span class="tsd-signature-symbol">:</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-kind-parameter">onchange</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">language</span><span class="tsd-signature-symbol">:</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-class">LanguageBroker</a><span class="tsd-signature-symbol">&lt;</span><a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">&gt;</span><a href="#constructorlanguagebroker" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Creates a language broker.</p>
 </div>
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
 <ul class="tsd-type-parameter-list">
-<li><span id="constructorlanguagebrokersupportedlanguages"><span class="tsd-signature-keyword">const</span> <span class="tsd-kind-type-parameter">SupportedLanguages</span> <span class="tsd-signature-keyword">extends</span> <span class="tsd-signature-keyword">readonly</span> <a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">[]</span></span>
+<li><span id="constructorlanguagebrokersupportedlanguages"><span class="tsd-signature-keyword">const</span> <span class="tsd-kind-type-parameter">SupportedLanguages</span> <span class="tsd-signature-keyword">extends</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">,</span> <a href="../types/BCP47LanguageTag.html" class="tsd-signature-type tsd-kind-type-alias">BCP47LanguageTag</a><span class="tsd-signature-symbol">]</span></span>
 <div class="tsd-comment tsd-typography"><p>The readonly list whose entries determine the supported language union.</p>
 </div></li></ul></section>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
-<li><span><span class="tsd-kind-parameter">initialLanguage</span>: <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></span>
-<div class="tsd-comment tsd-typography"><p>A supported language returned by <a href="#get" class="tsd-kind-method">get</a> until the first update.</p>
+<li><span><span class="tsd-kind-parameter">initialLanguage</span>: <span class="tsd-signature-type">string</span></span>
+<div class="tsd-comment tsd-typography"><p>The preferred initial language. The first supported language is used when this value is unsupported.</p>
 </div></li>
 <li><span><span class="tsd-kind-parameter">supportedLanguages</span>: <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a></span>
-<div class="tsd-comment tsd-typography"><p>The languages accepted by <a href="#set" class="tsd-kind-method">set</a>, in iteration order.</p>
+<div class="tsd-comment tsd-typography"><p>A non-empty list of languages accepted by <a href="#set" class="tsd-kind-method">set</a>, in iteration order.</p>
 </div></li>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">onchange</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">language</span><span class="tsd-signature-symbol">:</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-type">void</span></span>
 <div class="tsd-comment tsd-typography"><p>An optional callback invoked with the new language on every update.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">LanguageBroker</a><span class="tsd-signature-symbol">&lt;</span><a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/6a216f82306eda3705be8ee63074ce5e977605d6/src/LanguageBroker/index.ts#L47">LanguageBroker/index.ts:47</a></li></ul></aside></div></li></ul></section></section></details>
+<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/9bb21c3ee630979071d3cf67135b4de9ac8e404b/src/LanguageBroker/index.ts#L50">LanguageBroker/index.ts:50</a></li></ul></aside></div></li></ul></section></section></details>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="methods-1">Methods<a href="#methods-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
 <section>
@@ -110,7 +110,7 @@ language tag, invokes the optional change callback, and dispatches a typed
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/6a216f82306eda3705be8ee63074ce5e977605d6/src/LanguageBroker/index.ts#L104">LanguageBroker/index.ts:104</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/9bb21c3ee630979071d3cf67135b4de9ac8e404b/src/LanguageBroker/index.ts#L109">LanguageBroker/index.ts:109</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="get"><span>get</span><a href="#get" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -121,7 +121,7 @@ language tag, invokes the optional change callback, and dispatches a typed
 </div>
 <h4 class="tsd-returns-title">Returns <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/6a216f82306eda3705be8ee63074ce5e977605d6/src/LanguageBroker/index.ts#L70">LanguageBroker/index.ts:70</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/9bb21c3ee630979071d3cf67135b4de9ac8e404b/src/LanguageBroker/index.ts#L75">LanguageBroker/index.ts:75</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="has"><span>has</span><a href="#has" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -140,7 +140,7 @@ union.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-kind-parameter">language</span> <span class="tsd-signature-keyword">is</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/6a216f82306eda3705be8ee63074ce5e977605d6/src/LanguageBroker/index.ts#L65">LanguageBroker/index.ts:65</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/9bb21c3ee630979071d3cf67135b4de9ac8e404b/src/LanguageBroker/index.ts#L70">LanguageBroker/index.ts:70</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="list"><span>list</span><a href="#list" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -151,7 +151,7 @@ union.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">SetIterator</span><span class="tsd-signature-symbol">&lt;</span><a class="tsd-signature-type tsd-kind-type-parameter" href="#supportedlanguages">SupportedLanguages</a><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/6a216f82306eda3705be8ee63074ce5e977605d6/src/LanguageBroker/index.ts#L75">LanguageBroker/index.ts:75</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/9bb21c3ee630979071d3cf67135b4de9ac8e404b/src/LanguageBroker/index.ts#L80">LanguageBroker/index.ts:80</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="removeeventlistener"><span>remove<wbr/>Event<wbr/>Listener</span><a href="#removeeventlistener" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -178,7 +178,7 @@ union.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/6a216f82306eda3705be8ee63074ce5e977605d6/src/LanguageBroker/index.ts#L125">LanguageBroker/index.ts:125</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/9bb21c3ee630979071d3cf67135b4de9ac8e404b/src/LanguageBroker/index.ts#L130">LanguageBroker/index.ts:130</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="set"><span>set</span><a href="#set" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -196,7 +196,7 @@ union.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/6a216f82306eda3705be8ee63074ce5e977605d6/src/LanguageBroker/index.ts#L86">LanguageBroker/index.ts:86</a></li></ul></aside></div></li></ul></section></section></details></div>
+<li>Defined in <a href="https://github.com/sovereignbase/utils/blob/9bb21c3ee630979071d3cf67135b4de9ac8e404b/src/LanguageBroker/index.ts#L91">LanguageBroker/index.ts:91</a></li></ul></aside></div></li></ul></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

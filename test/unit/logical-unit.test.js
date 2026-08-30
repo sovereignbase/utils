@@ -311,6 +311,12 @@ test('LanguageBroker ignores unsupported runtime language changes', () => {
   assert.deepEqual(changes, [])
 })
 
+test('LanguageBroker falls back from an unsupported initial language', () => {
+  const broker = new LanguageBroker('sv', ['en', 'fi'])
+
+  assert.equal(broker.get(), 'en')
+})
+
 test('afterIdleFor runs the callback after the idle timeout', async () => {
   let calls = 0
   const afterIdle = afterIdleFor(10, () => {

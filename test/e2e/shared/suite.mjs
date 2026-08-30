@@ -122,12 +122,14 @@ export async function runUtilsSuite(api, options = {}) {
   await runTest('LanguageBroker synchronizes language changes', () => {
     const callbackChanges = []
     const eventChanges = []
-    const broker = new LanguageBroker('en', ['en', 'fi', 'sv'], (language) => {
+    const broker = new LanguageBroker('de', ['en', 'fi', 'sv'], (language) => {
       callbackChanges.push(language)
     })
     const listener = (event) => {
       eventChanges.push(event.detail)
     }
+
+    assertEqual(broker.get(), 'en')
 
     broker.addEventListener('change', listener)
     broker.set('fi')

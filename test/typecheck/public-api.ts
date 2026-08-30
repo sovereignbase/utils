@@ -40,8 +40,12 @@ languageBroker.addEventListener('change', (event) => {
 languageBroker.set('fi-FI')
 // @ts-expect-error the language is valid BCP 47 but is not supported by this broker
 languageBroker.set('sv-SE')
-// @ts-expect-error the initial language must occur in the supported language list
-new LanguageBroker('sv-SE', ['en-US', 'fi-FI'])
+const fallbackLanguage: 'en-US' | 'fi-FI' = new LanguageBroker('sv-SE', [
+  'en-US',
+  'fi-FI',
+]).get()
+// @ts-expect-error at least one supported language is required
+new LanguageBroker('en-US', [])
 const languageTag: BCP47LanguageTag = 'fi'
 const regionalLanguageTag: BCP47LanguageTag = 'en-US'
 const privateUseLanguageTag: BCP47LanguageTag = 'qaa'
@@ -69,6 +73,7 @@ if (isRecord(unknownValue)) unknownValue.example
 
 void bytes
 void currentLanguage
+void fallbackLanguage
 void supportedLanguages
 void languageTag
 void regionalLanguageTag

@@ -29,7 +29,10 @@ import type { BCP47LanguageTag } from '../BCP47LanguageTag/index.js'
  * @typeParam SupportedLanguages - The readonly list whose entries determine the supported language union.
  */
 export class LanguageBroker<
-  const SupportedLanguages extends readonly BCP47LanguageTag[],
+  const SupportedLanguages extends readonly [
+    BCP47LanguageTag,
+    ...BCP47LanguageTag[],
+  ],
 > {
   private readonly supportedLanguages: ReadonlySet<SupportedLanguages[number]>
   private readonly eventTarget: EventTarget = new EventTarget()
@@ -40,17 +43,19 @@ export class LanguageBroker<
   /**
    * Creates a language broker.
    *
-   * @param initialLanguage - A supported language returned by {@link LanguageBroker.get | get} until the first update.
-   * @param supportedLanguages - The languages accepted by {@link LanguageBroker.set | set}, in iteration order.
+   * @param initialLanguage - The preferred initial language. The first supported language is used when this value is unsupported.
+   * @param supportedLanguages - A non-empty list of languages accepted by {@link LanguageBroker.set | set}, in iteration order.
    * @param onchange - An optional callback invoked with the new language on every update.
    */
   constructor(
-    initialLanguage: SupportedLanguages[number],
+    initialLanguage: string,
     supportedLanguages: SupportedLanguages,
     onchange?: (language: SupportedLanguages[number]) => void
   ) {
     this.supportedLanguages = new Set(supportedLanguages)
-    this.language = initialLanguage
+    this.language = this.has(initialLanguage)
+      ? initialLanguage
+      : supportedLanguages[0]
     this.onchange = onchange
   }
 

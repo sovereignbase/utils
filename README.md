@@ -138,7 +138,7 @@ Provides IANA-registered standalone language tags and Unicode CLDR locale tags, 
 import { LanguageBroker } from '@sovereignbase/utils'
 
 const languages = new LanguageBroker(
-  'en-US',
+  document.documentElement.lang,
   ['en-US', 'fi-FI'],
   (language) => {
     document.documentElement.lang = language
@@ -156,7 +156,7 @@ languages.has('sv-SE') // false
 [...languages.list()] // ['en-US', 'fi-FI']
 ```
 
-Keeps the current BCP 47 language tag within an inferred set of supported languages and reports updates through an optional callback and typed `change` events. `has()` narrows strings to the supported-language union, which `get()`, `set()`, `list()`, callbacks, and event details also preserve.
+Keeps the current BCP 47 language tag within an inferred, non-empty set of supported languages and reports updates through an optional callback and typed `change` events. An unsupported initial string falls back to the first supported language. `has()` narrows strings to the supported-language union, which `get()`, `set()`, `list()`, callbacks, and event details also preserve.
 
 ### `UnicodeLocaleIdentifier`
 
