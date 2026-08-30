@@ -1,6 +1,4 @@
 const TEST_TIMEOUT_MS = 5000
-const VALID_UUID_V7 = '018f0d1e-6c82-7d4b-91c1-8a7b5e2f4a10'
-const VALID_UUID_V4 = '550e8400-e29b-41d4-a716-446655440000'
 const KNOWN_PROTOTYPES = new Set([
   'null',
   'undefined',
@@ -48,13 +46,8 @@ export async function runUtilsSuite(api, options = {}) {
     deriveBytes,
     getISO31661Alpha2CountryCodeSet,
     isRecord,
-    isUint32,
     prototype,
-    isUuidV7,
-    isUuidV7BigInt,
-    safeBigIntFromString,
     safeStructuredClone,
-    uuidV7BigIntStringToBigInt,
   } = api
 
   function assert(condition, message) {
@@ -115,23 +108,9 @@ export async function runUtilsSuite(api, options = {}) {
     )
     assert(typeof prototype === 'function', 'prototype export missing')
     assert(typeof isRecord === 'function', 'isRecord export missing')
-    assert(typeof isUint32 === 'function', 'isUint32 export missing')
-    assert(typeof isUuidV7 === 'function', 'isUuidV7 export missing')
-    assert(
-      typeof isUuidV7BigInt === 'function',
-      'isUuidV7BigInt export missing'
-    )
-    assert(
-      typeof safeBigIntFromString === 'function',
-      'safeBigIntFromString export missing'
-    )
     assert(
       typeof safeStructuredClone === 'function',
       'safeStructuredClone export missing'
-    )
-    assert(
-      typeof uuidV7BigIntStringToBigInt === 'function',
-      'uuidV7BigIntStringToBigInt export missing'
     )
   })
 
@@ -234,33 +213,6 @@ export async function runUtilsSuite(api, options = {}) {
     assertEqual(prototype(tagged), 'unknown')
   })
 
-  await runTest('isUuidV7 accepts version 7 uuids', () => {
-    assertEqual(isUuidV7(VALID_UUID_V7), true)
-  })
-
-  await runTest('isUuidV7 rejects non-version-7 values', () => {
-    assertEqual(isUuidV7(VALID_UUID_V4), false)
-    assertEqual(isUuidV7('not-a-uuid'), false)
-    assertEqual(isUuidV7('018f0d1e6c827d4b91c18a7b5e2f4a10'), false)
-    assertEqual(isUuidV7(null), false)
-    assertEqual(isUuidV7(undefined), false)
-    assertEqual(isUuidV7(7), false)
-  })
-
-  await runTest('isUuidV7BigInt accepts version 7 UUID bigints', () => {
-    assertEqual(isUuidV7BigInt(0x018f0d1e6c827d4b91c18a7b5e2f4a10n), true)
-  })
-
-  await runTest('isUuidV7BigInt rejects non-version-7 bigint values', () => {
-    assertEqual(isUuidV7BigInt(0x550e8400e29b41d4a716446655440000n), false)
-    assertEqual(isUuidV7BigInt(0x018f0d1e6c826d4b91c18a7b5e2f4a10n), false)
-    assertEqual(isUuidV7BigInt(0x018f0d1e6c827d4b71c18a7b5e2f4a10n), false)
-    assertEqual(isUuidV7BigInt(-1n), false)
-    assertEqual(isUuidV7BigInt(0x100000000000000000000000000000000n), false)
-    assertEqual(isUuidV7BigInt('018f0d1e6c827d4b91c18a7b5e2f4a10'), false)
-    assertEqual(isUuidV7BigInt(null), false)
-  })
-
   await runTest('isRecord accepts only plain object records', () => {
     class Example {}
 
@@ -273,31 +225,6 @@ export async function runUtilsSuite(api, options = {}) {
     assertEqual(isRecord(null), false)
     assertEqual(isRecord(undefined), false)
     assertEqual(isRecord('record'), false)
-  })
-
-  await runTest('isUint32 accepts only unsigned 32-bit integer numbers', () => {
-    assertEqual(isUint32(0), true)
-    assertEqual(isUint32(-0), true)
-    assertEqual(isUint32(4_294_967_295), true)
-    assertEqual(isUint32(-1), false)
-    assertEqual(isUint32(4_294_967_296), false)
-    assertEqual(isUint32(1.5), false)
-    assertEqual(isUint32(Number.NaN), false)
-    assertEqual(isUint32('1'), false)
-    assertEqual(isUint32(1n), false)
-    assertEqual(isUint32(null), false)
-  })
-
-  await runTest('safeBigIntFromString returns parsed bigints', () => {
-    const zero = safeBigIntFromString('0')
-    const large = safeBigIntFromString('9007199254740993')
-    const hexadecimal = safeBigIntFromString('0x10')
-    const invalid = safeBigIntFromString('not-a-bigint')
-
-    assertEqual(zero, 0n)
-    assertEqual(large, 9007199254740993n)
-    assertEqual(hexadecimal, 16n)
-    assertEqual(invalid, false)
   })
 
   await runTest(
@@ -315,23 +242,6 @@ export async function runUtilsSuite(api, options = {}) {
         Array.from(first).join(',') !== Array.from(separated).join(','),
         'expected different domains to derive different bytes'
       )
-    }
-  )
-
-  await runTest(
-    'uuidV7BigIntStringToBigInt returns only valid UUID v7 bigints',
-    () => {
-      const valid = 0x018f0d1e6c827d4b91c18a7b5e2f4a10n
-      const invalidVersion = 0x018f0d1e6c826d4b91c18a7b5e2f4a10n
-      const invalidVariant = 0x018f0d1e6c827d4b71c18a7b5e2f4a10n
-
-      assertEqual(uuidV7BigIntStringToBigInt(valid.toString()), valid)
-      assertEqual(uuidV7BigIntStringToBigInt(`0x${valid.toString(16)}`), valid)
-      assertEqual(uuidV7BigIntStringToBigInt(invalidVersion.toString()), false)
-      assertEqual(uuidV7BigIntStringToBigInt(invalidVariant.toString()), false)
-      assertEqual(uuidV7BigIntStringToBigInt('not-a-bigint'), false)
-      assertEqual(uuidV7BigIntStringToBigInt(valid), false)
-      assertEqual(uuidV7BigIntStringToBigInt(null), false)
     }
   )
 

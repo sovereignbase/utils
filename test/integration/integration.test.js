@@ -8,21 +8,13 @@ const require = createRequire(import.meta.url)
 const cjsApi = require('../../dist/index.cjs')
 
 const runtimeExports = [
-  'UINT32_MAX',
-  'UINT32_MIN',
-  'UINT32_SIZE',
   'afterIdleFor',
   'browserHasSovereignbaseDependencies',
   'deriveBytes',
   'getISO31661Alpha2CountryCodeSet',
   'isRecord',
-  'isUint32',
-  'isUuidV7',
-  'isUuidV7BigInt',
   'prototype',
-  'safeBigIntFromString',
   'safeStructuredClone',
-  'uuidV7BigIntStringToBigInt',
 ]
 
 test('esm and cjs entrypoints expose the same runtime API', () => {
@@ -43,41 +35,8 @@ test('esm and cjs entrypoints behave the same', async () => {
     assert.equal(esmApi.prototype(value), cjsApi.prototype(value))
   }
 
-  const validUuidV7 = '018f0d1e-6c82-7d4b-91c1-8a7b5e2f4a10'
-  const invalidUuid = '550e8400-e29b-41d4-a716-446655440000'
-
-  assert.equal(esmApi.isUuidV7(validUuidV7), cjsApi.isUuidV7(validUuidV7))
-  assert.equal(esmApi.isUuidV7(invalidUuid), cjsApi.isUuidV7(invalidUuid))
-  assert.equal(
-    esmApi.isUuidV7BigInt(0x018f0d1e6c827d4b91c18a7b5e2f4a10n),
-    cjsApi.isUuidV7BigInt(0x018f0d1e6c827d4b91c18a7b5e2f4a10n)
-  )
-  assert.equal(
-    esmApi.isUuidV7BigInt(0x550e8400e29b41d4a716446655440000n),
-    cjsApi.isUuidV7BigInt(0x550e8400e29b41d4a716446655440000n)
-  )
-  assert.equal(
-    esmApi.uuidV7BigIntStringToBigInt(
-      0x018f0d1e6c827d4b91c18a7b5e2f4a10n.toString()
-    ),
-    cjsApi.uuidV7BigIntStringToBigInt(
-      0x018f0d1e6c827d4b91c18a7b5e2f4a10n.toString()
-    )
-  )
-  assert.equal(
-    esmApi.uuidV7BigIntStringToBigInt('not-a-bigint'),
-    cjsApi.uuidV7BigIntStringToBigInt('not-a-bigint')
-  )
   assert.equal(esmApi.isRecord({ ok: true }), cjsApi.isRecord({ ok: true }))
   assert.equal(esmApi.isRecord([]), cjsApi.isRecord([]))
-  assert.equal(esmApi.isUint32(4_294_967_295), cjsApi.isUint32(4_294_967_295))
-  assert.equal(esmApi.isUint32(4_294_967_296), cjsApi.isUint32(4_294_967_296))
-  assert.equal(esmApi.safeBigIntFromString('42'), 42n)
-  assert.equal(
-    esmApi.safeBigIntFromString('not-a-bigint'),
-    cjsApi.safeBigIntFromString('not-a-bigint')
-  )
-
   const cloneable = { ok: true, nested: { count: 1 } }
   const esmClone = esmApi.safeStructuredClone(cloneable)
   const cjsClone = cjsApi.safeStructuredClone(cloneable)

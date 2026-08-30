@@ -72,8 +72,5 @@
   "bugs": {
     "url": "https://github.com/sovereignbase/utils/issues"
   },
-  "homepage": "https://github.com/sovereignbase/utils#readme",
-  "dependencies": {
-    "uuid": "^14.0.2"
-  }
+  "homepage": "https://github.com/sovereignbase/utils#readme"
 }

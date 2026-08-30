@@ -1,15 +1,14 @@
 /**
  * Small, runtime-portable utilities shared by Sovereignbase packages.
  *
- * The package exposes focused helpers for type inspection, UUID validation,
- * deterministic byte derivation, browser capability checks, cloning, and
+ * The package exposes focused helpers for type inspection, deterministic byte
+ * derivation, browser capability checks, cloning, and
  * scheduling without introducing runtime-specific state.
  *
  * @packageDocumentation
  */
 export { deriveBytes } from './deriveBytes/index.js'
 export { prototype, type Prototype } from './prototype/index.js'
-export { isUuidV7 } from './isUuidV7/index.js'
 export { safeStructuredClone } from './safeStructuredClone/index.js'
 export {
   type ISO31661Alpha2,
@@ -18,12 +17,6 @@ export {
 export { browserHasSovereignbaseDependencies } from './browserHasSovereignbaseDependencies/index.js'
 export { afterIdleFor } from './afterIdleFor/index.js'
 export { isRecord } from './isRecord/index.js'
-export { isUuidV7BigInt } from './isUuidV7BigInt/index.js'
-export { safeBigIntFromString } from './safeBigIntFromString/index.js'
-export { uuidV7BigIntStringToBigInt } from './uuidV7BigIntStringToBigInt/index.js'
-export {
-  isUint32,
-  UINT32_MIN,
-  UINT32_MAX,
-  UINT32_SIZE,
-} from './isUint32/index.js'
+export { type BCP47LanguageTag } from './BCP47LanguageTag/index.js'
+export { type UnicodeLocaleIdentifier } from './UnicodeLocaleIdentifier/index.js'
+export { type OpenGraphLocale } from './OpenGraphLocale/index.js'

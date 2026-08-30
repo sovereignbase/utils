@@ -70,34 +70,6 @@ prototype(new URL('https://sovereignbase.dev')) // 'url'
 
 Returns a normalized lowercase runtime tag for common primitives, serializable built-ins, and selected platform objects.
 
-### `isUuidV7()`
-
-```ts
-import { isUuidV7 } from '@sovereignbase/utils'
-
-const value = '018f0d1e-6c82-7d4b-91c1-8a7b5e2f4a10'
-
-if (isUuidV7(value)) {
-  value // string, confirmed UUID v7
-}
-```
-
-Checks that a value is a syntactically valid UUID version 7 string.
-
-### `isUuidV7BigInt()`
-
-```ts
-import { isUuidV7BigInt } from '@sovereignbase/utils'
-
-const value = 0x018f0d1e6c827d4b91c18a7b5e2f4a10n
-
-if (isUuidV7BigInt(value)) {
-  value // bigint, confirmed UUID v7 bit layout
-}
-```
-
-Checks that a bigint is inside the 128-bit UUID range and has UUID version 7 and RFC 4122 variant bits.
-
 ### `isRecord()`
 
 ```ts
@@ -111,55 +83,6 @@ if (isRecord(value)) {
 ```
 
 Checks that a value is a plain object record: non-null, not an array, and backed by an `Object` constructor prototype.
-
-### `isUint32()`
-
-```ts
-import {
-  isUint32,
-  UINT32_MIN,
-  UINT32_MAX,
-  UINT32_SIZE,
-} from '@sovereignbase/utils'
-
-const value: unknown = 4_294_967_295
-
-if (isUint32(value)) {
-  value // number, confirmed unsigned 32-bit integer
-}
-```
-
-Checks that a value is a JavaScript number representing an integer in the inclusive unsigned 32-bit range, `0` through `2^32 - 1`.
-
-### `safeBigIntFromString()`
-
-```ts
-import { safeBigIntFromString } from '@sovereignbase/utils'
-
-const result = safeBigIntFromString('9007199254740993')
-
-if (result !== false) {
-  result // 9007199254740993n
-}
-```
-
-Converts a string to a bigint using JavaScript `BigInt()` string conversion semantics and returns `false` instead of throwing for invalid input.
-
-### `uuidV7BigIntStringToBigInt()`
-
-```ts
-import { uuidV7BigIntStringToBigInt } from '@sovereignbase/utils'
-
-const value = uuidV7BigIntStringToBigInt(
-  '2071992528307252230503468673270762000'
-)
-
-if (value !== false) {
-  value // bigint, confirmed UUID v7 bit layout
-}
-```
-
-Converts a bigint string to a bigint and returns it only when the resulting value has a UUID v7 bit layout.
 
 ### `safeStructuredClone()`
 
@@ -193,6 +116,48 @@ function epicFunction1(countryCode: ISO31661Alpha2) {
 ```
 
 Returns a fresh `Set` containing all supported ISO 3166-1 alpha-2 country codes.
+
+### `BCP47LanguageTag`
+
+```ts
+import { type BCP47LanguageTag } from '@sovereignbase/utils'
+
+function setDocumentLanguage(languageTag: BCP47LanguageTag) {
+  document.documentElement.lang = languageTag
+}
+
+setDocumentLanguage('en-US')
+```
+
+Provides IANA-registered standalone language tags and Unicode CLDR locale tags, including region, script, and variant forms, without adding runtime code to the package.
+
+### `UnicodeLocaleIdentifier`
+
+```ts
+import { type UnicodeLocaleIdentifier } from '@sovereignbase/utils'
+
+function formatDate(locale: UnicodeLocaleIdentifier, date: Date) {
+  return new Intl.DateTimeFormat(locale).format(date)
+}
+
+formatDate('fi-FI', new Date())
+```
+
+Provides the locale identifiers backed by Unicode CLDR locale data, including default-content identifiers such as `en-US`.
+
+### `OpenGraphLocale`
+
+```ts
+import { type OpenGraphLocale } from '@sovereignbase/utils'
+
+function localeMeta(locale: OpenGraphLocale) {
+  return `<meta property="og:locale" content="${locale}">`
+}
+
+localeMeta('fi_FI')
+```
+
+Provides CLDR-backed Open Graph locales in the protocol's `language_TERRITORY` format.
 
 ### `browserHasSovereignbaseDependencies()`
 
