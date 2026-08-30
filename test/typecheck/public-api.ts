@@ -28,6 +28,11 @@ const languageBroker = new LanguageBroker(
 )
 const currentLanguage: 'en-US' | 'fi-FI' = languageBroker.get()
 const supportedLanguages: SetIterator<'en-US' | 'fi-FI'> = languageBroker.list()
+const detectedLanguage: string = 'fi-FI'
+if (languageBroker.has(detectedLanguage)) {
+  const supportedLanguage: 'en-US' | 'fi-FI' = detectedLanguage
+  languageBroker.set(supportedLanguage)
+}
 languageBroker.addEventListener('change', (event) => {
   const changedLanguage: 'en-US' | 'fi-FI' = event.detail
   void changedLanguage

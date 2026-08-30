@@ -54,6 +54,18 @@ export class LanguageBroker<
     this.onchange = onchange
   }
 
+  /**
+   * Checks whether a string is supported by this broker.
+   *
+   * A successful check narrows the string to the inferred supported language
+   * union.
+   *
+   * @param language - The string to check.
+   */
+  public has(language: string): language is SupportedLanguages[number] {
+    return this.supportedLanguages.has(language as SupportedLanguages[number])
+  }
+
   /** Returns the active language. */
   public get(): SupportedLanguages[number] {
     return this.language

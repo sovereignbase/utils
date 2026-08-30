@@ -135,6 +135,8 @@ export async function runUtilsSuite(api, options = {}) {
     broker.set('sv')
 
     assertEqual(broker.get(), 'sv')
+    assertEqual(broker.has('fi'), true)
+    assertEqual(broker.has('de'), false)
     assertEqual([...broker.list()].join(','), 'en,fi,sv')
     assertEqual(callbackChanges.join(','), 'fi,sv')
     assertEqual(eventChanges.join(','), 'fi')

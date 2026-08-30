@@ -260,6 +260,8 @@ test('LanguageBroker stores language changes and invokes its callback', () => {
   })
 
   assert.equal(broker.get(), 'en-US')
+  assert.equal(broker.has('en-US'), true)
+  assert.equal(broker.has('sv-SE'), false)
   assert.deepEqual([...broker.list()], ['en-US', 'fi-FI'])
 
   broker.set('fi-FI')

@@ -151,10 +151,12 @@ languages.addEventListener('change', (event) => {
 
 languages.set('fi-FI')
 languages.get() // 'fi-FI'
+languages.has('fi-FI') // true
+languages.has('sv-SE') // false
 [...languages.list()] // ['en-US', 'fi-FI']
 ```
 
-Keeps the current BCP 47 language tag within an inferred set of supported languages and reports updates through an optional callback and typed `change` events. `get()`, `set()`, `list()`, callbacks, and event details all preserve the supported-language union.
+Keeps the current BCP 47 language tag within an inferred set of supported languages and reports updates through an optional callback and typed `change` events. `has()` narrows strings to the supported-language union, which `get()`, `set()`, `list()`, callbacks, and event details also preserve.
 
 ### `UnicodeLocaleIdentifier`
 
