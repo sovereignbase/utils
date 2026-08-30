@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/sovereignbase/utils/compare/v2.1.0...v2.2.0) (2026-08-30)
+
+
+### Features
+
+* add supported language check ([9bb21c3](https://github.com/sovereignbase/utils/commit/9bb21c3ee630979071d3cf67135b4de9ac8e404b))
+
 ## [2.1.0](https://github.com/sovereignbase/utils/compare/v2.0.0...v2.1.0) (2026-08-30)
 
 
