@@ -8,6 +8,7 @@ const require = createRequire(import.meta.url)
 const cjsApi = require('../../dist/index.cjs')
 
 const runtimeExports = [
+  'LanguageBroker',
   'afterIdleFor',
   'browserHasSovereignbaseDependencies',
   'deriveBytes',
@@ -37,6 +38,16 @@ test('esm and cjs entrypoints behave the same', async () => {
 
   assert.equal(esmApi.isRecord({ ok: true }), cjsApi.isRecord({ ok: true }))
   assert.equal(esmApi.isRecord([]), cjsApi.isRecord([]))
+
+  const esmLanguages = new esmApi.LanguageBroker('en', ['en', 'fi'])
+  const cjsLanguages = new cjsApi.LanguageBroker('en', ['en', 'fi'])
+
+  esmLanguages.set('fi')
+  cjsLanguages.set('fi')
+
+  assert.equal(esmLanguages.get(), cjsLanguages.get())
+  assert.deepEqual([...esmLanguages.list()], [...cjsLanguages.list()])
+
   const cloneable = { ok: true, nested: { count: 1 } }
   const esmClone = esmApi.safeStructuredClone(cloneable)
   const cjsClone = cjsApi.safeStructuredClone(cloneable)

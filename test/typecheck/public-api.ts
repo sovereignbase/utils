@@ -2,6 +2,7 @@ import {
   deriveBytes,
   getISO31661Alpha2CountryCodeSet,
   isRecord,
+  LanguageBroker,
   prototype,
   safeStructuredClone,
   type BCP47LanguageTag,
@@ -17,6 +18,25 @@ const bytes: Promise<Uint8Array<ArrayBuffer>> = deriveBytes(
   32
 )
 const countryCodes: Set<ISO31661Alpha2> = getISO31661Alpha2CountryCodeSet()
+const languageBroker = new LanguageBroker(
+  'en-US',
+  ['en-US', 'fi-FI'],
+  (language) => {
+    const changedLanguage: 'en-US' | 'fi-FI' = language
+    void changedLanguage
+  }
+)
+const currentLanguage: 'en-US' | 'fi-FI' = languageBroker.get()
+const supportedLanguages: SetIterator<'en-US' | 'fi-FI'> = languageBroker.list()
+languageBroker.addEventListener('change', (event) => {
+  const changedLanguage: 'en-US' | 'fi-FI' = event.detail
+  void changedLanguage
+})
+languageBroker.set('fi-FI')
+// @ts-expect-error the language is valid BCP 47 but is not supported by this broker
+languageBroker.set('sv-SE')
+// @ts-expect-error the initial language must occur in the supported language list
+new LanguageBroker('sv-SE', ['en-US', 'fi-FI'])
 const languageTag: BCP47LanguageTag = 'fi'
 const regionalLanguageTag: BCP47LanguageTag = 'en-US'
 const privateUseLanguageTag: BCP47LanguageTag = 'qaa'
@@ -43,6 +63,8 @@ const unknownValue: unknown = tag
 if (isRecord(unknownValue)) unknownValue.example
 
 void bytes
+void currentLanguage
+void supportedLanguages
 void languageTag
 void regionalLanguageTag
 void privateUseLanguageTag

@@ -12,7 +12,8 @@ Shared TypeScript utilities for removing repeated code across Sovereignbase code
 
 - Runtimes: modern JavaScript runtimes; the repository includes runtime compatibility tests for Node, Bun, Deno, Cloudflare Workers, Edge Runtime, and browsers.
 - Module format: ESM and CommonJS.
-- Required globals / APIs: Web Crypto is required by `deriveBytes()`, and
+- Required globals / APIs: Web Crypto is required by `deriveBytes()`,
+  `EventTarget` and `CustomEvent` are required by `LanguageBroker`, and
   `structuredClone` is required for successful `safeStructuredClone()` results.
 - Browser capability checks: `browserHasSovereignbaseDependencies()` resolves to `false` outside secure browser contexts and when required browser APIs are missing.
 - TypeScript: bundled types.
@@ -130,6 +131,30 @@ setDocumentLanguage('en-US')
 ```
 
 Provides IANA-registered standalone language tags and Unicode CLDR locale tags, including region, script, and variant forms, without adding runtime code to the package.
+
+### `LanguageBroker`
+
+```ts
+import { LanguageBroker } from '@sovereignbase/utils'
+
+const languages = new LanguageBroker(
+  'en-US',
+  ['en-US', 'fi-FI'],
+  (language) => {
+    document.documentElement.lang = language
+  }
+)
+
+languages.addEventListener('change', (event) => {
+  console.log(`Language changed to ${event.detail}`)
+})
+
+languages.set('fi-FI')
+languages.get() // 'fi-FI'
+[...languages.list()] // ['en-US', 'fi-FI']
+```
+
+Keeps the current BCP 47 language tag within an inferred set of supported languages and reports updates through an optional callback and typed `change` events. `get()`, `set()`, `list()`, callbacks, and event details all preserve the supported-language union.
 
 ### `UnicodeLocaleIdentifier`
 

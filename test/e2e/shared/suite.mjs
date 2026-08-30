@@ -46,6 +46,7 @@ export async function runUtilsSuite(api, options = {}) {
     deriveBytes,
     getISO31661Alpha2CountryCodeSet,
     isRecord,
+    LanguageBroker,
     prototype,
     safeStructuredClone,
   } = api
@@ -109,9 +110,34 @@ export async function runUtilsSuite(api, options = {}) {
     assert(typeof prototype === 'function', 'prototype export missing')
     assert(typeof isRecord === 'function', 'isRecord export missing')
     assert(
+      typeof LanguageBroker === 'function',
+      'LanguageBroker export missing'
+    )
+    assert(
       typeof safeStructuredClone === 'function',
       'safeStructuredClone export missing'
     )
+  })
+
+  await runTest('LanguageBroker synchronizes language changes', () => {
+    const callbackChanges = []
+    const eventChanges = []
+    const broker = new LanguageBroker('en', ['en', 'fi', 'sv'], (language) => {
+      callbackChanges.push(language)
+    })
+    const listener = (event) => {
+      eventChanges.push(event.detail)
+    }
+
+    broker.addEventListener('change', listener)
+    broker.set('fi')
+    broker.removeEventListener('change', listener)
+    broker.set('sv')
+
+    assertEqual(broker.get(), 'sv')
+    assertEqual([...broker.list()].join(','), 'en,fi,sv')
+    assertEqual(callbackChanges.join(','), 'fi,sv')
+    assertEqual(eventChanges.join(','), 'fi')
   })
 
   await runTest('prototype classifies primitives', () => {

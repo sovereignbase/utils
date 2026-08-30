@@ -41,6 +41,16 @@ function toExecutableEdgeEsm(bundleCode) {
 }
 
 const runtime = new EdgeRuntime()
+runtime.evaluate(`
+  if (typeof globalThis.CustomEvent === 'undefined') {
+    globalThis.CustomEvent = class CustomEvent extends Event {
+      constructor(type, init = {}) {
+        super(type, init)
+        this.detail = init.detail ?? null
+      }
+    }
+  }
+`)
 const bundled = await build({
   entryPoints: [esmDistPath],
   bundle: true,

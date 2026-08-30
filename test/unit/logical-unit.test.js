@@ -8,6 +8,7 @@ import {
   deriveBytes,
   getISO31661Alpha2CountryCodeSet,
   isRecord,
+  LanguageBroker,
   prototype,
   safeStructuredClone,
 } from '../../dist/index.js'
@@ -250,6 +251,62 @@ test('getISO31661Alpha2CountryCodeSet returns a fresh set of country codes', () 
   assert.equal(first.has('XX'), false)
   assert.notEqual(first, second)
   assert.deepEqual([...first], [...second])
+})
+
+test('LanguageBroker stores language changes and invokes its callback', () => {
+  const changes = []
+  const broker = new LanguageBroker('en-US', ['en-US', 'fi-FI'], (language) => {
+    changes.push(language)
+  })
+
+  assert.equal(broker.get(), 'en-US')
+  assert.deepEqual([...broker.list()], ['en-US', 'fi-FI'])
+
+  broker.set('fi-FI')
+
+  assert.equal(broker.get(), 'fi-FI')
+  assert.deepEqual(changes, ['fi-FI'])
+})
+
+test('LanguageBroker dispatches typed change events until removal', () => {
+  const broker = new LanguageBroker('en', ['en', 'fi', 'sv'])
+  const changes = []
+  const listener = (event) => {
+    changes.push(event.detail)
+  }
+
+  broker.addEventListener('change', listener)
+  broker.set('fi')
+  broker.removeEventListener('change', listener)
+  broker.set('sv')
+
+  assert.deepEqual(changes, ['fi'])
+})
+
+test('LanguageBroker ignores removal of an unregistered listener', () => {
+  const broker = new LanguageBroker('en', ['en', 'fi'])
+  let calls = 0
+  const listener = () => {
+    calls += 1
+  }
+
+  broker.addEventListener('change', listener)
+  broker.removeEventListener('change', () => {})
+  broker.set('fi')
+
+  assert.equal(calls, 1)
+})
+
+test('LanguageBroker ignores unsupported runtime language changes', () => {
+  const changes = []
+  const broker = new LanguageBroker('en', ['en', 'fi'], (language) => {
+    changes.push(language)
+  })
+
+  broker.set('sv')
+
+  assert.equal(broker.get(), 'en')
+  assert.deepEqual(changes, [])
 })
 
 test('afterIdleFor runs the callback after the idle timeout', async () => {
