@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/sovereignbase/utils/compare/v2.0.0...v2.1.0) (2026-08-30)
+
+
+### Features
+
+* add typed language broker ([1d96229](https://github.com/sovereignbase/utils/commit/1d962291cb67d0bba7b054e4226c2db21cfd73a8))
+
 ## [2.0.0](https://github.com/sovereignbase/utils/compare/v1.6.0...v2.0.0) (2026-08-30)
 
 
