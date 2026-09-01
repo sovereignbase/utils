@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/sovereignbase/utils/compare/v2.2.0...v2.3.0) (2026-09-01)
+
+
+### Features
+
+* add time utilities ([0ba93b5](https://github.com/sovereignbase/utils/commit/0ba93b5f09e2b09ec54ed3f75cf46499d715a89a))
+
 ## [2.2.0](https://github.com/sovereignbase/utils/compare/v2.1.0...v2.2.0) (2026-08-30)
 
 
