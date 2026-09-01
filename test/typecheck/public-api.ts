@@ -1,4 +1,5 @@
 import {
+  daysAsMilliseconds,
   deriveBytes,
   getISO31661Alpha2CountryCodeSet,
   isRecord,
@@ -10,8 +11,11 @@ import {
   type OpenGraphLocale,
   type Prototype,
   type UnicodeLocaleIdentifier,
+  waitFor,
 } from '../../src/index.js'
 
+const milliseconds: number = daysAsMilliseconds(2)
+const waiting: Promise<void> = waitFor(0)
 const bytes: Promise<Uint8Array<ArrayBuffer>> = deriveBytes(
   new Uint8Array(),
   new Uint8Array(),
@@ -72,6 +76,8 @@ const unknownValue: unknown = tag
 if (isRecord(unknownValue)) unknownValue.example
 
 void bytes
+void milliseconds
+void waiting
 void currentLanguage
 void fallbackLanguage
 void supportedLanguages

@@ -43,12 +43,14 @@ export async function runUtilsSuite(api, options = {}) {
   const {
     afterIdleFor,
     browserHasSovereignbaseDependencies,
+    daysAsMilliseconds,
     deriveBytes,
     getISO31661Alpha2CountryCodeSet,
     isRecord,
     LanguageBroker,
     prototype,
     safeStructuredClone,
+    waitFor,
   } = api
 
   function assert(condition, message) {
@@ -102,6 +104,10 @@ export async function runUtilsSuite(api, options = {}) {
       'browserHasSovereignbaseDependencies export missing'
     )
     assert(typeof afterIdleFor === 'function', 'afterIdleFor export missing')
+    assert(
+      typeof daysAsMilliseconds === 'function',
+      'daysAsMilliseconds export missing'
+    )
     assert(typeof deriveBytes === 'function', 'deriveBytes export missing')
     assert(
       typeof getISO31661Alpha2CountryCodeSet === 'function',
@@ -117,6 +123,7 @@ export async function runUtilsSuite(api, options = {}) {
       typeof safeStructuredClone === 'function',
       'safeStructuredClone export missing'
     )
+    assert(typeof waitFor === 'function', 'waitFor export missing')
   })
 
   await runTest('LanguageBroker synchronizes language changes', () => {
@@ -350,6 +357,21 @@ export async function runUtilsSuite(api, options = {}) {
     assertEqual(calls, 0)
     await new Promise((resolve) => setTimeout(resolve, 20))
     assertEqual(calls, 1)
+  })
+
+  await runTest('daysAsMilliseconds converts days to milliseconds', () => {
+    assertEqual(daysAsMilliseconds(2.5), 216_000_000)
+  })
+
+  await runTest('waitFor waits before resolving', async () => {
+    let resolved = false
+    const waiting = waitFor(10).then(() => {
+      resolved = true
+    })
+
+    assertEqual(resolved, false)
+    await waiting
+    assertEqual(resolved, true)
   })
 
   await runTest(

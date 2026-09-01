@@ -11,11 +11,13 @@ const runtimeExports = [
   'LanguageBroker',
   'afterIdleFor',
   'browserHasSovereignbaseDependencies',
+  'daysAsMilliseconds',
   'deriveBytes',
   'getISO31661Alpha2CountryCodeSet',
   'isRecord',
   'prototype',
   'safeStructuredClone',
+  'waitFor',
 ]
 
 test('esm and cjs entrypoints expose the same runtime API', () => {
@@ -85,6 +87,10 @@ test('esm and cjs entrypoints behave the same', async () => {
 
   assert.equal(typeof esmApi.afterIdleFor(1, () => {}), 'function')
   assert.equal(typeof cjsApi.afterIdleFor(1, () => {}), 'function')
+
+  assert.equal(esmApi.daysAsMilliseconds(2), cjsApi.daysAsMilliseconds(2))
+
+  await Promise.all([esmApi.waitFor(0), cjsApi.waitFor(0)])
 
   const base = new Uint8Array([1, 2, 3])
   const domain = new Uint8Array([4, 5, 6])

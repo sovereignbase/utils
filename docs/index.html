@@ -93,6 +93,16 @@ distinct domain for each purpose.</p>
 </code><button type="button">Copy</button></pre>
 
 <p>Creates a function that resets a timer on every call and runs the callback after the requested idle timeout.</p>
+<h3 id="_-11" class="tsd-anchor-link"><code>daysAsMilliseconds()</code><a href="#_-11" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">daysAsMilliseconds</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-6">const</span><span class="hl-1"> </span><span class="hl-7">retentionPeriod</span><span class="hl-1"> = </span><span class="hl-0">daysAsMilliseconds</span><span class="hl-1">(</span><span class="hl-8">30</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Converts a number of 24-hour days to milliseconds.</p>
+<h3 id="_-12" class="tsd-anchor-link"><code>waitFor()</code><a href="#_-12" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="ts"><span class="hl-4">import</span><span class="hl-1"> { </span><span class="hl-5">waitFor</span><span class="hl-1"> } </span><span class="hl-4">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@sovereignbase/utils&#39;</span><br/><br/><span class="hl-4">await</span><span class="hl-1"> </span><span class="hl-0">waitFor</span><span class="hl-1">(</span><span class="hl-8">1_000</span><span class="hl-1">)</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Returns a promise that resolves after the requested number of milliseconds.</p>
 <h2 id="tests" class="tsd-anchor-link">Tests<a href="#tests" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <ul>
 <li>Unit and integration tests in Vitest with 100% statement, branch, function,
@@ -144,7 +154,9 @@ machine.</p>
 <li><a href="#_-7"><span></span></a></li>
 <li><a href="#_-8"><span></span></a></li>
 <li><a href="#_-9"><span></span></a></li>
-<li><a href="#_-10"><span></span></a></li></ul></li>
+<li><a href="#_-10"><span></span></a></li>
+<li><a href="#_-11"><span></span></a></li>
+<li><a href="#_-12"><span></span></a></li></ul></li>
 <li><a href="#tests"><span>Tests</span></a></li>
 <li><a href="#api-documentation"><span>API documentation</span></a></li>
 <li><a href="#benchmarks"><span>Benchmarks</span></a></li>

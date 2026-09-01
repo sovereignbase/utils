@@ -5,12 +5,14 @@ import { test } from 'vitest'
 import {
   afterIdleFor,
   browserHasSovereignbaseDependencies,
+  daysAsMilliseconds,
   deriveBytes,
   getISO31661Alpha2CountryCodeSet,
   isRecord,
   LanguageBroker,
   prototype,
   safeStructuredClone,
+  waitFor,
 } from '../../dist/index.js'
 
 function toHex(bytes) {
@@ -347,6 +349,24 @@ test('afterIdleFor restarts the timer on every call', async () => {
 
   await waitFor(20)
   assert.equal(calls, 1)
+})
+
+test('daysAsMilliseconds converts days to milliseconds', () => {
+  assert.equal(daysAsMilliseconds(1), 86_400_000)
+  assert.equal(daysAsMilliseconds(2.5), 216_000_000)
+  assert.equal(daysAsMilliseconds(0), 0)
+  assert.equal(daysAsMilliseconds(-1), -86_400_000)
+})
+
+test('waitFor resolves after the requested duration', async () => {
+  let resolved = false
+  const waiting = waitFor(10).then(() => {
+    resolved = true
+  })
+
+  assert.equal(resolved, false)
+  await waiting
+  assert.equal(resolved, true)
 })
 
 test('browserHasSovereignbaseDependencies returns false outside browser runtimes', async () => {

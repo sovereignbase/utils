@@ -212,6 +212,26 @@ document.addEventListener('input', saveAfterTypingStops)
 
 Creates a function that resets a timer on every call and runs the callback after the requested idle timeout.
 
+### `daysAsMilliseconds()`
+
+```ts
+import { daysAsMilliseconds } from '@sovereignbase/utils'
+
+const retentionPeriod = daysAsMilliseconds(30)
+```
+
+Converts a number of 24-hour days to milliseconds.
+
+### `waitFor()`
+
+```ts
+import { waitFor } from '@sovereignbase/utils'
+
+await waitFor(1_000)
+```
+
+Returns a promise that resolves after the requested number of milliseconds.
+
 ## Tests
 
 - Unit and integration tests in Vitest with 100% statement, branch, function,
