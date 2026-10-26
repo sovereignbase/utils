@@ -28,3 +28,4 @@ export {
   type LanguageEventListenerFor,
   type LanguageEventMap,
 } from './LanguageBroker/index.js'
+export type * from './.types/type.js'
