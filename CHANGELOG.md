@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.4.0](https://github.com/sovereignbase/utils/compare/v2.3.0...v2.4.0) (2026-10-26)
+
+
+### Features
+
+* overide type for readonly array and tuple types ([2621b2a](https://github.com/sovereignbase/utils/commit/2621b2a3f13f0269e010de7db36be70efbfe83de))
+
 ## [2.3.0](https://github.com/sovereignbase/utils/compare/v2.2.0...v2.3.0) (2026-09-01)
 
 
