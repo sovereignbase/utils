@@ -6,17 +6,17 @@
  * @param callback Function to run after the idle timeout expires.
  * @returns Function that restarts the idle timeout whenever it is called.
  */
-export function afterIdleFor(
+export function afterIdleFor<Args extends unknown[]>(
   timeout: number,
-  callback: () => void
-): () => void {
+  callback: (...args: Args) => void
+): (...args: Args) => void {
   let timer: ReturnType<typeof setTimeout> | undefined
 
-  return () => {
+  return (...args) => {
     clearTimeout(timer)
 
     timer = setTimeout(() => {
-      callback()
+      callback(...args)
     }, timeout)
   }
 }
