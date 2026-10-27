@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.5.0](https://github.com/sovereignbase/utils/compare/v2.4.0...v2.5.0) (2026-10-27)
+
+
+### Features
+
+* add callback arguments type inference support to afterIdleFor ([7cb845b](https://github.com/sovereignbase/utils/commit/7cb845b8028cf95d947d164feb642dc3c57fb798))
+
 ## [2.4.0](https://github.com/sovereignbase/utils/compare/v2.3.0...v2.4.0) (2026-10-26)
 
 
