@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.6.0](https://github.com/sovereignbase/utils/compare/v2.5.0...v2.6.0) (2026-10-28)
+
+
+### Features
+
+* add DeepReadonly and WritableObject utility types ([33e3ac0](https://github.com/sovereignbase/utils/commit/33e3ac05d750b9a3832b53772d3debff4da9e475))
+
 ## [2.5.0](https://github.com/sovereignbase/utils/compare/v2.4.0...v2.5.0) (2026-10-27)
 
 
