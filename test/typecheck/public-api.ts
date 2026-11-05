@@ -1,6 +1,7 @@
 import {
   daysAsMilliseconds,
   deriveBytes,
+  generateOTC,
   getISO31661Alpha2CountryCodeSet,
   isRecord,
   LanguageBroker,
@@ -15,6 +16,10 @@ import {
 } from '../../src/index.js'
 
 const milliseconds: number = daysAsMilliseconds(2)
+const code: string = generateOTC()
+const longerCode: string = generateOTC(12)
+// @ts-expect-error code length must be a number
+generateOTC('12')
 const waiting: Promise<void> = waitFor(0)
 const bytes: Promise<Uint8Array<ArrayBuffer>> = deriveBytes(
   new Uint8Array(),
@@ -76,6 +81,8 @@ const unknownValue: unknown = tag
 if (isRecord(unknownValue)) unknownValue.example
 
 void bytes
+void code
+void longerCode
 void milliseconds
 void waiting
 void currentLanguage

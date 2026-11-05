@@ -49,21 +49,21 @@
     "prepublishOnly": "npm run test && npm run bench"
   },
   "devDependencies": {
-    "@cloudflare/vitest-plugin": "^1.4.9",
+    "@cloudflare/vitest-plugin": "^1.5.1",
     "@commitlint/cli": "^21.2.4",
     "@commitlint/config-conventional": "^21.2.4",
     "@playwright/test": "^1.64.1",
-    "@types/node": "^26.6.5",
-    "@vitest/coverage-v8": "^5.0.5",
+    "@types/node": "^26.6.6",
+    "@vitest/coverage-v8": "^5.1.0",
     "edge-runtime": "^4.0.1",
     "husky": "^9.1.7",
     "playwright": "^1.64.1",
     "prettier": "^3.9.10",
-    "tsdown": "^0.23.3",
+    "tsdown": "^0.23.5",
     "typedoc": "^0.28.20",
     "typescript": "^6.0.3",
-    "vitest": "^5.0.5",
-    "wrangler": "^4.154.0"
+    "vitest": "^5.1.0",
+    "wrangler": "^4.157.0"
   },
   "repository": {
     "type": "git",
@@ -72,9 +72,12 @@
   "bugs": {
     "url": "https://github.com/sovereignbase/utils/issues"
   },
-  "homepage": "https://github.com/sovereignbase/utils#readme",
+  "homepage": "https://sovereignbase.dev/utils",
   "allowScripts": {
     "esbuild@0.28.2": true,
     "workerd@1.20261023.1": true
+  },
+  "dependencies": {
+    "@sovereignbase/bytecodec": "^2.0.1"
   }
 }

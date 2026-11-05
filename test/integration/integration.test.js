@@ -13,6 +13,7 @@ const runtimeExports = [
   'browserHasSovereignbaseDependencies',
   'daysAsMilliseconds',
   'deriveBytes',
+  'generateOTC',
   'getISO31661Alpha2CountryCodeSet',
   'isRecord',
   'prototype',
@@ -89,6 +90,12 @@ test('esm and cjs entrypoints behave the same', async () => {
   assert.equal(typeof cjsApi.afterIdleFor(1, () => {}), 'function')
 
   assert.equal(esmApi.daysAsMilliseconds(2), cjsApi.daysAsMilliseconds(2))
+
+  for (const api of [esmApi, cjsApi]) {
+    assert.match(api.generateOTC(), /^[A-HJ-NP-Z2-9]{8}$/u)
+    assert.match(api.generateOTC(12), /^[A-HJ-NP-Z2-9]{12}$/u)
+    assert.equal(api.generateOTC(0), '')
+  }
 
   await Promise.all([esmApi.waitFor(0), cjsApi.waitFor(0)])
 

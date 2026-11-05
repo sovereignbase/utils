@@ -45,6 +45,7 @@ export async function runUtilsSuite(api, options = {}) {
     browserHasSovereignbaseDependencies,
     daysAsMilliseconds,
     deriveBytes,
+    generateOTC,
     getISO31661Alpha2CountryCodeSet,
     isRecord,
     LanguageBroker,
@@ -109,6 +110,7 @@ export async function runUtilsSuite(api, options = {}) {
       'daysAsMilliseconds export missing'
     )
     assert(typeof deriveBytes === 'function', 'deriveBytes export missing')
+    assert(typeof generateOTC === 'function', 'generateOTC export missing')
     assert(
       typeof getISO31661Alpha2CountryCodeSet === 'function',
       'getISO31661Alpha2CountryCodeSet export missing'
@@ -279,6 +281,15 @@ export async function runUtilsSuite(api, options = {}) {
         Array.from(first).join(',') !== Array.from(separated).join(','),
         'expected different domains to derive different bytes'
       )
+    }
+  )
+
+  await runTest(
+    'generateOTC creates codes with the requested length and alphabet',
+    () => {
+      assert(/^[A-HJ-NP-Z2-9]{8}$/u.test(generateOTC()))
+      assert(/^[A-HJ-NP-Z2-9]{12}$/u.test(generateOTC(12)))
+      assertEqual(generateOTC(0), '')
     }
   )
 

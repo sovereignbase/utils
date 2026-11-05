@@ -12,7 +12,7 @@ Shared TypeScript utilities for removing repeated code across Sovereignbase code
 
 - Runtimes: modern JavaScript runtimes; the repository includes runtime compatibility tests for Node, Bun, Deno, Cloudflare Workers, Edge Runtime, and browsers.
 - Module format: ESM and CommonJS.
-- Required globals / APIs: Web Crypto is required by `deriveBytes()`,
+- Required globals / APIs: Web Crypto is required by `deriveBytes()` and `generateOTC()`,
   `EventTarget` and `CustomEvent` are required by `LanguageBroker`, and
   `structuredClone` is required for successful `safeStructuredClone()` results.
 - Browser capability checks: `browserHasSovereignbaseDependencies()` resolves to `false` outside secure browser contexts and when required browser APIs are missing.
@@ -58,6 +58,23 @@ const bytes = await deriveBytes(
 Derives a deterministic number of domain-separated bytes with HKDF-SHA-256.
 Identical base, domain, and length inputs produce identical output. Use a
 distinct domain for each purpose.
+
+### `generateOTC()`
+
+```ts
+import { generateOTC } from '@sovereignbase/utils'
+
+const code = generateOTC() // Eight characters by default.
+const longerCode = generateOTC(12)
+```
+
+Generates a cryptographically random one-time code using the alphabet
+`ABCDEFGHJKLMNPQRSTUVWXYZ23456789`, which excludes `I`, `O`, `0`, and `1`.
+Each character has five bits of entropy; the default code has 40 bits.
+Use a non-negative integer length up to 65,536; zero returns an empty string.
+Invalid byte lengths and requests exceeding the Web Crypto limit throw.
+Manage expiration, single-use enforcement, and attempt limits where the code
+is stored and verified.
 
 ### `prototype()`
 

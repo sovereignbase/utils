@@ -118,10 +118,6 @@ async function withMockedBrowserGlobals(mockedGlobals, fn) {
   }
 }
 
-function waitFor(milliseconds) {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds))
-}
-
 test('prototype classifies common primitives and built-ins', () => {
   assert.equal(prototype(null), 'null')
   assert.equal(prototype(undefined), 'undefined')

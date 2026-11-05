@@ -2,12 +2,13 @@
  * Small, runtime-portable utilities shared by Sovereignbase packages.
  *
  * The package exposes focused helpers for type inspection, deterministic byte
- * derivation, browser capability checks, cloning, and
+ * derivation, random one-time codes, browser capability checks, cloning, and
  * scheduling without introducing runtime-specific state.
  *
  * @packageDocumentation
  */
 export { deriveBytes } from './deriveBytes/index.js'
+export { generateOTC } from './generateOTC/index.js'
 export { prototype, type Prototype } from './prototype/index.js'
 export { safeStructuredClone } from './safeStructuredClone/index.js'
 export {
