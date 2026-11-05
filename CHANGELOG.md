@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.7.0](https://github.com/sovereignbase/utils/compare/v2.6.0...v2.7.0) (2026-11-05)
+
+
+### Features
+
+* add cryptographically random one-time codes ([082dd15](https://github.com/sovereignbase/utils/commit/082dd15f700ace888029dfdb95074cc2c603da86))
+
 ## [2.6.0](https://github.com/sovereignbase/utils/compare/v2.5.0...v2.6.0) (2026-10-28)
 
 
